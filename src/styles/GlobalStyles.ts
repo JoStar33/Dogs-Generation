@@ -24,11 +24,10 @@ const GlobalStyle = createGlobalStyle`
     /* overflow-x: hidden; //hidden일경우 sticky안됨 */
   }
 
-  body{
+  body {
     font-family: Pretendard, PretendardVariable, sans-serif;
     padding: 0;
     margin: 0;
- 
     /* scroll-snap-type: y mandatory; */
     /* 
     overflow-x: clip;
