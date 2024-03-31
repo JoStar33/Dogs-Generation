@@ -6,7 +6,8 @@ interface ITheme {
   children: React.ReactNode;
 }
 
-const colors = {
+// eslint-disable-next-line react-refresh/only-export-components
+export const colors = {
   main: '#FFBB6B',
   subMain: '#FF9921',
   mustard: '#FFE500',

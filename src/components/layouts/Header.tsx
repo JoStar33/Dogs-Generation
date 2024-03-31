@@ -1,7 +1,15 @@
 import styled from 'styled-components';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import Icons from '@/components/common/Icon';
 
 export default function Header() {
-  return <S.Header>Header</S.Header>;
+  return (
+    <S.Header>
+      <RxHamburgerMenu size={25} />
+      <Icons name="Logo" width="35px" height="35px" />
+      <div className="mock"></div>
+    </S.Header>
+  );
 }
 
 const S = {
@@ -9,5 +17,13 @@ const S = {
     width: 100%;
     background-color: ${(props) => props.theme.colors.subMain};
     height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    .mock {
+      width: 25px;
+      height: 25px;
+    }
   `,
 };
