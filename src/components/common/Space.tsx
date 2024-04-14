@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
-interface ISpace {
+interface IProps {
   height: number;
 }
 
-export default function Space({ height }: ISpace) {
+export default function Space({ height }: IProps) {
   return <S.Space height={height} />;
 }
 
 const S = {
-  Space: styled.div<ISpace>`
+  Space: styled.div<IProps>`
     height: ${(props) => props.height}px;
   `,
 };

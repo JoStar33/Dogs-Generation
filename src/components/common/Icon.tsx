@@ -4,7 +4,7 @@ import * as icons from '@/assets/icons';
 
 export type IconType = keyof typeof icons;
 
-export type IconProps = {
+export type IProps = {
   name: IconType;
   className?: string;
   style?: React.CSSProperties | undefined;
@@ -15,7 +15,7 @@ export type IconProps = {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-function Icon({ name, className, style, onClick, width = '20px', height = '20px' }: IconProps) {
+function Icon({ name, className, style, onClick, width = '20px', height = '20px' }: IProps) {
   return React.createElement(icons[name], {
     className,
     style,

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface IDarkBackground {
+interface IProps {
   children?: React.ReactNode;
   onClickClose?: () => void;
   style?: React.CSSProperties;
 }
 
-export default function DarkBackground({ onClickClose, style, children }: IDarkBackground) {
+export default function DarkBackground({ onClickClose, style, children }: IProps) {
   React.useEffect(() => {
     const targetElement = document.querySelector('body') as HTMLBodyElement;
     targetElement.style.overflow = 'hidden';

@@ -13,7 +13,7 @@ export default function Layout({ children }: IProps) {
   const [isOpenAside, setIsOpenAside] = React.useState(false);
   return (
     <S.Layout>
-      {isOpenAside && <Aside />}
+      {isOpenAside && <Aside setIsOpenAside={setIsOpenAside} />}
       <Header setIsOpenAside={setIsOpenAside} />
       <Main>{children}</Main>
       <BottomTab />

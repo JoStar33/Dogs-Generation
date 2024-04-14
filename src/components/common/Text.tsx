@@ -3,7 +3,7 @@ import { TextStyles } from '@/styles/TextStyles';
 import { ColorsTypes, colors } from '@/styles/Theme';
 import styled from 'styled-components';
 
-interface IText extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
+interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
   variant?: keyof typeof TextStyles;
   color?: keyof ColorsTypes;
   lineHeight?: string;
@@ -18,7 +18,7 @@ export default function Text({
   lineHeight = '1.2rem',
   isEllipsis = false,
   ...rest
-}: IText) {
+}: IProps) {
   return (
     <S.Text
       isEllipsis={isEllipsis}

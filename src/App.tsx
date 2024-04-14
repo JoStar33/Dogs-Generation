@@ -3,9 +3,10 @@ import Theme from '@/styles/Theme';
 import Layout from '@/components/layouts';
 import { useRecoilValue } from 'recoil';
 import { modalWithText } from '@/stores/modal';
-import Portal from './components/common/Portal';
+import Portal from '@/components/common/Portal';
 import Modal from '@/components/common/Modal';
 import { AnimatePresence } from 'framer-motion';
+import Router from '@/Router';
 
 export default function App() {
   const modalWithTextValue = useRecoilValue(modalWithText);
@@ -14,7 +15,7 @@ export default function App() {
     <Theme>
       <GlobalStyle />
       <Layout>
-        <></>
+        <Router />
       </Layout>
       <Portal>
         <AnimatePresence>

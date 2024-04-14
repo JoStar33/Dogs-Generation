@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Icons from '@/components/common/Icon';
 
-interface IHeader {
+interface IProps {
   setIsOpenAside: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Header({ setIsOpenAside }: IHeader) {
+export default function Header({ setIsOpenAside }: IProps) {
   return (
     <S.Header>
       <RxHamburgerMenu size={25} onClick={() => setIsOpenAside((prev) => !prev)} />

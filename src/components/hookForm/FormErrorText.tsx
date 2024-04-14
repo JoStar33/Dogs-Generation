@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import { ErrorMessage } from '@hookform/error-message';
 import { FieldErrors, FieldValues } from 'react-hook-form';
 
-interface IFormErrorText {
+interface IProps {
   name: string;
   errors: FieldErrors<FieldValues>;
   margin?: string;
 }
 
-export default function FormErrorText({ name, errors, margin }: IFormErrorText) {
+export default function FormErrorText({ name, errors, margin }: IProps) {
   return (
     <S.FormErrorText margin={margin}>
       <ErrorMessage errors={errors} name={name} />

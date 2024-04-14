@@ -4,7 +4,7 @@ import { useFormContext, Path, FieldValues } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
 import FormErrorText from '@/components/hookForm/FormErrorText';
 
-interface IFormInputA<T> extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface IProps<T> extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   name: Path<T>;
   label?: string;
   className?: string;
@@ -38,7 +38,7 @@ export default function FormInputA<T extends FieldValues>({
   readOnly,
   visibleError = true,
   ...rest
-}: IFormInputA<T>) {
+}: IProps<T>) {
   const {
     formState: { errors },
     register,

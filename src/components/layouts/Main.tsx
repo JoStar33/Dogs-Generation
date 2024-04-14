@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-interface IMain {
+interface IProps {
   children: React.ReactNode;
 }
 
-export default function Main({ children }: IMain) {
+export default function Main({ children }: IProps) {
   return <S.Main>{children}</S.Main>;
 }
 

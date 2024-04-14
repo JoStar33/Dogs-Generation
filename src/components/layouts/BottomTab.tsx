@@ -3,7 +3,13 @@ import { flexCenter } from '@/styles/Common';
 import styled from 'styled-components';
 
 export default function BottomTab() {
-  return <S.BottomTab>{router.map((bottomTab) => bottomTab.icon)}</S.BottomTab>;
+  return (
+    <S.BottomTab>
+      {router.map((bottomTab, index) => (
+        <bottomTab.icon key={index} />
+      ))}
+    </S.BottomTab>
+  );
 }
 
 const S = {
