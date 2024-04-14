@@ -1,13 +1,14 @@
 import { IoHome } from 'react-icons/io5';
 import routerPath from './routerPath';
+import React from 'react';
 
-interface IRouter {
+interface IBottomTabElement {
   title: string;
   path: string;
   icon: () => React.ReactElement;
 }
 
-const router: IRouter[] = [
+const bottomTab: IBottomTabElement[] = [
   {
     title: 'home',
     path: routerPath.HOME,
@@ -21,4 +22,4 @@ const router: IRouter[] = [
   },
 ];
 
-export default router;
+export default bottomTab;

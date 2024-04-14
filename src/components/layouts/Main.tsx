@@ -12,6 +12,7 @@ const S = {
   Main: styled.div`
     width: 100%;
     height: calc(100% - 160px);
+    padding: 10px;
     overflow-y: scroll;
   `,
 };

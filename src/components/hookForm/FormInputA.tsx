@@ -112,9 +112,7 @@ const S = {
             border: 1px solid #e6e5e5;
           `};
         &::placeholder {
-          ${(props) => props.theme.mobile`
-            font-size: 12px;
-          `};
+          font-size: 12px;
           color: #a6a6a6;
         }
         &:focus {

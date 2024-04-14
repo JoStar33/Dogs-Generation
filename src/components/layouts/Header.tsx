@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Icons from '@/components/common/Icon';
+import { FaUser } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import routerPath from '@/constants/routerPath';
 
 interface IProps {
   setIsOpenAside: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Header({ setIsOpenAside }: IProps) {
+  const navigate = useNavigate();
   return (
     <S.Header>
-      <RxHamburgerMenu size={25} onClick={() => setIsOpenAside((prev) => !prev)} />
+      <RxHamburgerMenu size={25} onClick={() => setIsOpenAside((prev) => !prev)} cursor="pointer" />
       <Icons name="Logo" width="35px" height="35px" />
-      <div className="mock"></div>
+      <FaUser size={25} cursor="pointer" onClick={() => navigate(routerPath.USER)} />
     </S.Header>
   );
 }

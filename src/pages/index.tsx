@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default function Home() {
-  return <S.Home>index</S.Home>;
+export default function HomePage() {
+  return <S.HomePage>index</S.HomePage>;
 }
 
 const S = {
-  Home: styled.div``,
+  HomePage: styled.div``,
 };

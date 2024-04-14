@@ -1,12 +1,15 @@
-import router from '@/constants/router';
+import router from '@/constants/bottomTab';
 import { flexCenter } from '@/styles/Common';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function BottomTab() {
   return (
     <S.BottomTab>
       {router.map((bottomTab, index) => (
-        <bottomTab.icon key={index} />
+        <Link key={index} to={bottomTab.path}>
+          <bottomTab.icon key={index} />
+        </Link>
       ))}
     </S.BottomTab>
   );
@@ -18,6 +21,9 @@ const S = {
     width: 100%;
     height: 80px;
     background-color: ${(props) => props.theme.colors.subMain};
+    & * {
+      cursor: pointer;
+    }
     .home-wrapper {
       ${flexCenter}
       width: 65px;
