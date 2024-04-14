@@ -9,6 +9,7 @@ interface IProps {
 
 export default function SignIn({ onSubmit }: IProps) {
   const { handleSubmit } = useFormContext<ISignInForm>();
+
   return (
     <S.SignIn>
       <div className="sign-in-header">
@@ -16,8 +17,10 @@ export default function SignIn({ onSubmit }: IProps) {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInputA<ISignInForm> name="email" label="이메일" />
-        <FormInputA<ISignInForm> name="password" label="비밀번호" />
-        <button className="sign-in-button">LOGIN</button>
+        <FormInputA<ISignInForm> name="password" label="비밀번호" type="password" />
+        <button className="sign-in-button" type="submit">
+          LOGIN
+        </button>
       </form>
     </S.SignIn>
   );
@@ -41,6 +44,7 @@ const S = {
       font-size: 1.4rem;
       height: 60px;
       font-weight: 700;
+      margin-top: 50px;
       background-color: ${(props) => props.theme.colors.mustard};
     }
     form {

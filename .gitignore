@@ -16,6 +16,7 @@ dist-ssr
 .env*.local
 .env-cmdrc.json
 .env-cmdrc
+.env
 
 # Editor directories and files
 .vscode/*

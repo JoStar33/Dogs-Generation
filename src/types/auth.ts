@@ -1,3 +1,5 @@
+import { DefaultResponse } from '.';
+
 /*************************** Domain & DTO ***************************/
 export interface IUser {
   id: number;
@@ -13,5 +15,14 @@ export interface ISignInForm {
 }
 
 /***************************** Request *****************************/
+export interface ISignInRequest extends ISignInForm {}
 
 /***************************** Response *****************************/
+export interface ISignInResponse extends DefaultResponse {
+  value: {
+    accessToken: string;
+    id: number;
+    name: string;
+    email: string;
+  };
+}

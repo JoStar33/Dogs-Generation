@@ -1,3 +1,4 @@
+import Auth from '@/api/auth';
 import SignIn from '@/components/sign-in';
 import { ISignInForm } from '@/types/auth';
 import { schema } from '@/utils/schema';
@@ -18,6 +19,7 @@ export default function SignInContainer() {
   const onSubmit: SubmitHandler<ISignInForm> = React.useCallback(
     async (submitData, event) => {
       event?.preventDefault();
+      Auth.Post.signIn(submitData);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [methods],

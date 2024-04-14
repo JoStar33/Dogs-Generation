@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { validation } from '@/utils/validation';
 
 const signInSchema = yup.object({
-  email: validation.SIGN_IN_ID,
+  email: validation.EMAIL,
   password: validation.PASSWORD,
 });
 
