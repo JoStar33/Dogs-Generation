@@ -37,6 +37,7 @@ const S = {
     position: fixed;
     top: 0px;
     background-color: rgba(0, 0, 0, 0.7);
+    z-index: 4;
     .aside-header {
       width: 100%;
       display: flex;

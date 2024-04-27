@@ -33,10 +33,10 @@ function Alert() {
   return (
     <Portal>
       <DarkBackground>
-        <S.Modal variants={modalVariants} animate="visible" initial="hidden">
+        <S.Modal variants={modalVariants} animate="visible" initial="hidden" exit="hidden">
           <div className="modal-wrapper">
             <i className="info-icon">
-              <IoMdInformationCircleOutline size={20} />
+              <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
             <h3 className="title-text">{modalValue.titleText}</h3>
             <div className="desc-text-container">{computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>)}</div>
@@ -60,7 +60,7 @@ function Confirm() {
         <S.Modal variants={modalVariants} animate="visible" initial="hidden" exit="hidden">
           <div className="modal-wrapper">
             <i className="info-icon">
-              <IoMdInformationCircleOutline size={20} />
+              <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
             <h3 className="title-text">{modalValue.titleText}</h3>
             <div className="desc-text-container">{computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>)}</div>
