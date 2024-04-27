@@ -1,9 +1,5 @@
-import styled from 'styled-components';
+import HomeContainer from '@/containers/HomeContainer';
 
 export default function HomePage() {
-  return <S.HomePage>index</S.HomePage>;
+  return <HomeContainer />;
 }
-
-const S = {
-  HomePage: styled.div``,
-};
