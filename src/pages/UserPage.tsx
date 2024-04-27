@@ -1,9 +1,5 @@
-import styled from 'styled-components';
+import UserContainer from '@/containers/UserContainer';
 
 export default function UserPage() {
-  return <S.UserPage>UserPage</S.UserPage>;
+  return <UserContainer />;
 }
-
-const S = {
-  UserPage: styled.div``,
-};

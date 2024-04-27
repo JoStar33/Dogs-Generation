@@ -7,7 +7,7 @@ interface IProps {
 export default function Loading({ mode = 'block' }: IProps) {
   return (
     <S.Loading mode={mode}>
-      <img src="/public/images/Spinner200px.gif" />
+      <img src="/images/Spinner200px.gif" />
     </S.Loading>
   );
 }
