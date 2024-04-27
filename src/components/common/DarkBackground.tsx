@@ -25,7 +25,7 @@ export default function DarkBackground({ onClickClose, style, children }: IProps
 
 const S = {
   DarkBackground: styled.div`
-    z-index: 9;
+    z-index: 101;
     position: fixed;
     top: 0;
     right: 0;

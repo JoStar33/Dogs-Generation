@@ -4,6 +4,8 @@ import Icons from '@/components/common/Icon';
 import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import routerPath from '@/constants/routerPath';
+import { checkUserLoggedIn } from '@/utils/checkUserLoggedIn';
+import { FiLogIn } from 'react-icons/fi';
 
 interface IProps {
   setIsOpenAside: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,11 +13,16 @@ interface IProps {
 
 export default function Header({ setIsOpenAside }: IProps) {
   const navigate = useNavigate();
+
   return (
     <S.Header>
       <RxHamburgerMenu size={25} onClick={() => setIsOpenAside((prev) => !prev)} cursor="pointer" />
       <Icons name="Logo" width="35px" height="35px" />
-      <FaUser size={25} cursor="pointer" onClick={() => navigate(routerPath.USER)} />
+      {checkUserLoggedIn() ? (
+        <FaUser size={25} cursor="pointer" onClick={() => navigate(routerPath.USER)} />
+      ) : (
+        <FiLogIn size={25} cursor="pointer" onClick={() => navigate(routerPath.SIGN_IN)} />
+      )}
     </S.Header>
   );
 }
