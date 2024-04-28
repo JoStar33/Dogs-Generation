@@ -50,6 +50,10 @@ export default function FormInputA<T extends FieldValues>({
 
   const watchValue = watch(name);
 
+  const handleKeyDown: KeyboardEventHandler = (event) => {
+    if (!enterKey && event.key === 'Enter') event.preventDefault();
+  };
+
   React.useEffect(() => {
     if (watchValue && watchValue.length !== 0) clearErrors(name);
   }, [clearErrors, name, watchValue]);
@@ -58,10 +62,6 @@ export default function FormInputA<T extends FieldValues>({
     if (isFocusing) setFocus(name);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusing]);
-
-  const handleKeyDown: KeyboardEventHandler = (event) => {
-    if (!enterKey && event.key === 'Enter') event.preventDefault();
-  };
 
   return (
     <S.FormInputA margin={margin} className={className} maxWidth={maxWidth} height={height} disabled={disabled} readOnly={readOnly}>

@@ -11,9 +11,7 @@ const checkForMarkersRendering = (map: naver.maps.Map, markers: naver.maps.Marke
   markers.forEach((marker) => {
     const position = marker.getPosition();
 
-    if (mapBounds.hasPoint(position)) {
-      showMarker(map, marker);
-    }
+    if (mapBounds.hasPoint(position)) return showMarker(map, marker);
     hideMarker(marker);
   });
 };
