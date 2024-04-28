@@ -1,3 +1,4 @@
+import { flexCenter } from '@/styles/Common';
 import styled, { css } from 'styled-components';
 
 interface IProps {
@@ -14,9 +15,7 @@ export default function Loading({ mode = 'block' }: IProps) {
 
 const S = {
   Loading: styled.div<{ mode: string }>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
     z-index: 20;
     width: 100%;
     height: 100%;

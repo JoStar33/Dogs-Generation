@@ -10,6 +10,7 @@ export default function Main({ children }: IProps) {
 
 const S = {
   Main: styled.div`
+    position: relative;
     width: 100%;
     height: calc(100% - 160px);
     padding: 10px;

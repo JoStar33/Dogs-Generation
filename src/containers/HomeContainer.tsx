@@ -6,6 +6,7 @@ import React from 'react';
 export default function HomeContainer() {
   const { naver } = window;
   const mapElement = React.useRef<HTMLDivElement>(null);
+  const naverMapRef = React.useRef<naver.maps.Map | null>(null);
   const initSuccessChecker = React.useRef(false);
   const [marketMarkers, setMarketMarkers] = React.useState<naver.maps.Marker[]>([]);
   const userLocation = useGeolocation();
@@ -31,18 +32,28 @@ export default function HomeContainer() {
     }
   };
 
+  const handleMoveUserLocation = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (!naverMapRef.current) return;
+    naverMapRef.current.setCenter({
+      lat: permissionExistenceCoordinate().lat,
+      lng: permissionExistenceCoordinate().lng,
+    });
+    // TODO: map정보를 useRef로 가져오도록 만들기.
+  };
+
   React.useEffect(
     function initializeMap() {
       if (!mapElement.current || !naver || isErrorLoadLocation) return;
       if (initSuccessChecker.current) return;
       const location = new naver.maps.LatLng(permissionExistenceCoordinate().lat, permissionExistenceCoordinate().lng);
-      const map = new naver.maps.Map(mapElement.current, mapOptions(location));
+      naverMapRef.current = new naver.maps.Map(mapElement.current, mapOptions(location));
 
       if (isDeniedPermission) return;
 
       new naver.maps.Marker({
         position: location,
-        map,
+        map: naverMapRef.current,
       });
 
       initSuccessChecker.current = true;
@@ -59,15 +70,13 @@ export default function HomeContainer() {
       const zoomchangeEvent = naver.maps.Event.addListener(mapElement.current, 'zoom_changed', handleZoomChangedMap);
       const dragEndEvent = naver.maps.Event.addListener(mapElement.current, 'dragend', handleDragEndMap);
 
-      return () => {
-        naver.maps.Event.removeListener([zoomchangeEvent, dragEndEvent]);
-      };
+      return () => naver.maps.Event.removeListener([zoomchangeEvent, dragEndEvent]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [marketMarkers],
   );
 
-  return <Home ref={mapElement} />;
+  return <Home ref={mapElement} handleMoveUserLocation={handleMoveUserLocation} />;
 }
 
 const mapOptions = (location: naver.maps.LatLng) => ({

@@ -36,7 +36,8 @@ export default function useGeolocation() {
         message: '해당 브라우저는 GPS 기능을 지원하지 않습니다!',
       });
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    const watch = navigator.geolocation.watchPosition(onSuccess, onError, watchOptions);
+    return () => navigator.geolocation.clearWatch(watch);
   }, []);
 
   return location;
@@ -45,4 +46,10 @@ export default function useGeolocation() {
 export const INIT_COORDINATE = {
   LAT: 37.5656,
   LNG: 126.9769,
+};
+
+const watchOptions = {
+  enableHighAccuracy: false,
+  timeout: 5000,
+  maximumAge: 0,
 };
