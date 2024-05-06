@@ -33,6 +33,7 @@ const S = {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    rotate: 0;
     background-color: rgba(0, 0, 0, 0.1);
   `,
 };

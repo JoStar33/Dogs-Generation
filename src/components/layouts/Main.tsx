@@ -12,8 +12,9 @@ const S = {
   Main: styled.div`
     position: relative;
     width: 100%;
+    transform: rotate(0);
     height: calc(100% - 160px);
     padding: 10px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
   `,
 };

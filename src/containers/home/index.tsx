@@ -6,11 +6,18 @@ import MarkerIcon from '@/components/home/MarkerIcon';
 import queryKeys from '@/constants/queryKeys';
 import useGeolocation, { INIT_COORDINATE } from '@/hooks/useGeolocation';
 import useSimpleQuery, { IUseSimpleQuery } from '@/hooks/useSimpleQuery';
-import { ICoordinateListResponse } from '@/types/coordinate';
+import { ICoordinateItem, ICoordinateListResponse } from '@/types/coordinate';
 import checkForMarkersRendering from '@/utils/checkForMarkersRendering';
 import React from 'react';
+import BottomSheetContainer from './BottomSheetContainer';
+import { AnimatePresence } from 'framer-motion';
 
 const TEN_MINUTES = 10 * 60 * 1000;
+
+export interface IBottomSheetState {
+  isShow: boolean;
+  coordinateId: number;
+}
 
 export default function HomeContainer() {
   const { naver } = window;
@@ -18,6 +25,10 @@ export default function HomeContainer() {
   const naverMapRef = React.useRef<naver.maps.Map | null>(null);
   const initSuccessChecker = React.useRef(false);
   const [marketMarkers, setMarketMarkers] = React.useState<naver.maps.Marker[]>([]);
+  const [bottomSheetState, setBottomSheetState] = React.useState<IBottomSheetState>({
+    isShow: false,
+    coordinateId: 0,
+  });
   const userLocation = useGeolocation();
 
   const isErrorLoadLocation = !userLocation.loaded && userLocation.coordinates;
@@ -61,6 +72,18 @@ export default function HomeContainer() {
     });
   };
 
+  const handleClickCoordinate = (element: ICoordinateItem, marker: naver.maps.Marker) => {
+    marker.setAnimation(naver.maps.Animation.BOUNCE);
+    naverMapRef.current?.setCenter(element.coordinate);
+    setBottomSheetState({
+      isShow: true,
+      coordinateId: element.id,
+    });
+    setTimeout(() => {
+      marker.setAnimation(null);
+    }, 2000);
+  };
+
   React.useEffect(
     function initializeMap() {
       if (!mapElement.current || !naver || isErrorLoadLocation) return;
@@ -97,12 +120,7 @@ export default function HomeContainer() {
           map: naverMapRef.current as naver.maps.Map,
         });
         marker.setTitle(element.title);
-        naver.maps.Event.addListener(marker, 'click', () => {
-          marker.setAnimation(naver.maps.Animation.BOUNCE);
-          setTimeout(() => {
-            marker.setAnimation(null);
-          }, 2000);
-        });
+        naver.maps.Event.addListener(marker, 'click', () => handleClickCoordinate(element, marker));
         return marker;
       });
       setMarketMarkers(computedMarkers);
@@ -131,6 +149,9 @@ export default function HomeContainer() {
           <Loading mode="block" />
         </DarkBackground>
       )}
+      <AnimatePresence>
+        {bottomSheetState.isShow && <BottomSheetContainer setBottomSheetState={setBottomSheetState} bottomSheetState={bottomSheetState} />}
+      </AnimatePresence>
       <Home ref={mapElement} handleMoveUserLocation={handleMoveUserLocation} />
     </>
   );

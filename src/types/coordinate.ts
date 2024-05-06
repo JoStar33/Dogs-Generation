@@ -17,6 +17,14 @@ export interface ICoordinateItem {
   coordinate: ICoordinate;
 }
 
+export interface ICoordinateDetailInfo {
+  id: number;
+  title: string;
+  address: string;
+  phoneNumber: string;
+  image: string;
+}
+
 /******************************* Form ********************************/
 
 /***************************** Request *****************************/
@@ -24,4 +32,8 @@ export interface ICoordinateItem {
 /***************************** Response *****************************/
 export interface ICoordinateListResponse extends DefaultResponse {
   value: ICoordinateItem[];
+}
+
+export interface ICoordinateDetailInfoResponse extends DefaultResponse {
+  value: ICoordinateDetailInfo;
 }
