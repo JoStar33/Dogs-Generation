@@ -1,0 +1,15 @@
+.marker-wrapper {
+  width: 32px;
+  height: 50px;
+}
+
+.marker-wrapper__title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.6rem;
+}
+
+.marker-wrapper img {
+  width: 100%;
+  aspect-ratio: 1 / 1.5;
+}

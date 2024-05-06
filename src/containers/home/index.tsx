@@ -1,5 +1,8 @@
 import Coordinate from '@/api/coordinate';
+import DarkBackground from '@/components/common/DarkBackground';
+import Loading from '@/components/common/Loading';
 import Home from '@/components/home';
+import MarkerIcon from '@/components/home/MarkerIcon';
 import queryKeys from '@/constants/queryKeys';
 import useGeolocation, { INIT_COORDINATE } from '@/hooks/useGeolocation';
 import useSimpleQuery, { IUseSimpleQuery } from '@/hooks/useSimpleQuery';
@@ -29,7 +32,7 @@ export default function HomeContainer() {
     },
   };
 
-  const { data } = useSimpleQuery<ICoordinateListResponse>(request);
+  const { data, isLoading } = useSimpleQuery<ICoordinateListResponse>(request);
 
   const permissionExistenceCoordinate = () => {
     const lat = !userLocation.coordinates ? INIT_COORDINATE.LAT : userLocation.coordinates.lat;
@@ -56,7 +59,6 @@ export default function HomeContainer() {
       lat: permissionExistenceCoordinate().lat,
       lng: permissionExistenceCoordinate().lng,
     });
-    // TODO: map정보를 useRef로 가져오도록 만들기.
   };
 
   React.useEffect(
@@ -80,26 +82,58 @@ export default function HomeContainer() {
   );
 
   React.useEffect(
-    function initializeVirtualizeMarkerEvent() {
+    function initializeMarker() {
       if (!mapElement.current || !naver || isErrorLoadLocation || !data || !naverMapRef.current) return;
+      if (marketMarkers.length !== 0) return;
       const computedMarkers = data.value.map((element) => {
-        return new naver.maps.Marker({
+        const marker = new naver.maps.Marker({
           position: element.coordinate,
           title: element.title,
+          clickable: true,
+          icon: {
+            content: MarkerIcon(element.title),
+            anchor: new naver.maps.Point(19, 58),
+          },
           map: naverMapRef.current as naver.maps.Map,
         });
+        marker.setTitle(element.title);
+        naver.maps.Event.addListener(marker, 'click', () => {
+          marker.setAnimation(naver.maps.Animation.BOUNCE);
+          setTimeout(() => {
+            marker.setAnimation(null);
+          }, 2000);
+        });
+        return marker;
       });
       setMarketMarkers(computedMarkers);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data],
+  );
+
+  React.useEffect(
+    function initializeVirtualizeMarkerEvent() {
+      if (!mapElement.current || !naver) return;
+      if (marketMarkers.length === 0) return;
       const zoomchangeEvent = naver.maps.Event.addListener(mapElement.current, 'zoom_changed', handleZoomChangedMap);
       const dragEndEvent = naver.maps.Event.addListener(mapElement.current, 'dragend', handleDragEndMap);
 
       return () => naver.maps.Event.removeListener([zoomchangeEvent, dragEndEvent]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [naverMapRef.current, data],
+    [marketMarkers],
   );
 
-  return <Home ref={mapElement} handleMoveUserLocation={handleMoveUserLocation} />;
+  return (
+    <>
+      {isLoading && (
+        <DarkBackground>
+          <Loading mode="block" />
+        </DarkBackground>
+      )}
+      <Home ref={mapElement} handleMoveUserLocation={handleMoveUserLocation} />
+    </>
+  );
 }
 
 const mapOptions = (location: naver.maps.LatLng) => ({
