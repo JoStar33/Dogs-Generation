@@ -2,13 +2,20 @@ import ReactDOM from 'react-dom/client';
 import App from '@/App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { worker } from './mocks/browser';
-worker.start();
+async function enableMocking() {
+  const { worker } = await import('./mocks/browser');
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
-  </BrowserRouter>,
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start({ onUnhandledRequest: 'bypass' });
+}
+
+enableMocking().then(() =>
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <BrowserRouter>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </BrowserRouter>,
+  ),
 );

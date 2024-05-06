@@ -8,7 +8,7 @@ const URL_API = '/api';
 
 const config: AxiosRequestConfig = {
   baseURL: environment.serverUrl + URL_API + VERSION,
-  withCredentials: true,
+  withCredentials: false,
 };
 
 const responseBody = <T extends Object = DefaultResponse>(response: AxiosResponse<T>) => response.data;

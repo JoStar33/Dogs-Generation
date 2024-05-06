@@ -1,7 +1,13 @@
+import Coordinate from '@/api/coordinate';
 import Home from '@/components/home';
+import queryKeys from '@/constants/queryKeys';
 import useGeolocation, { INIT_COORDINATE } from '@/hooks/useGeolocation';
+import useSimpleQuery, { IUseSimpleQuery } from '@/hooks/useSimpleQuery';
+import { ICoordinateListResponse } from '@/types/coordinate';
 import checkForMarkersRendering from '@/utils/checkForMarkersRendering';
 import React from 'react';
+
+const TEN_MINUTES = 10 * 60 * 1000;
 
 export default function HomeContainer() {
   const { naver } = window;
@@ -13,6 +19,17 @@ export default function HomeContainer() {
 
   const isErrorLoadLocation = !userLocation.loaded && userLocation.coordinates;
   const isDeniedPermission = userLocation.loaded && !userLocation.coordinates;
+
+  const request: IUseSimpleQuery = {
+    queryKey: [queryKeys.coordinateList],
+    requestAPI: Coordinate.Get.list,
+    options: {
+      enabled: !!mapElement.current,
+      staleTime: TEN_MINUTES,
+    },
+  };
+
+  const { data } = useSimpleQuery<ICoordinateListResponse>(request);
 
   const permissionExistenceCoordinate = () => {
     const lat = !userLocation.coordinates ? INIT_COORDINATE.LAT : userLocation.coordinates.lat;
@@ -64,16 +81,22 @@ export default function HomeContainer() {
 
   React.useEffect(
     function initializeVirtualizeMarkerEvent() {
-      if (!mapElement.current || !naver || isErrorLoadLocation) return;
-      if (initSuccessChecker.current) return;
-      setMarketMarkers([]);
+      if (!mapElement.current || !naver || isErrorLoadLocation || !data || !naverMapRef.current) return;
+      const computedMarkers = data.value.map((element) => {
+        return new naver.maps.Marker({
+          position: element.coordinate,
+          title: element.title,
+          map: naverMapRef.current as naver.maps.Map,
+        });
+      });
+      setMarketMarkers(computedMarkers);
       const zoomchangeEvent = naver.maps.Event.addListener(mapElement.current, 'zoom_changed', handleZoomChangedMap);
       const dragEndEvent = naver.maps.Event.addListener(mapElement.current, 'dragend', handleDragEndMap);
 
       return () => naver.maps.Event.removeListener([zoomchangeEvent, dragEndEvent]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [marketMarkers],
+    [naverMapRef.current, data],
   );
 
   return <Home ref={mapElement} handleMoveUserLocation={handleMoveUserLocation} />;

@@ -1,9 +1,11 @@
 import { delay, http } from 'msw';
 import { ISignInResponse } from '@/types/auth';
-import environment from '@/environment';
+import { commonUrl } from '.';
+
+const authUrl = (path?: string) => `${commonUrl(`/auth${path}`)}`;
 
 const authHandler = [
-  http.post(`${environment.serverUrl}/api/v1/auth/sign-in`, async () => {
+  http.post(`${authUrl('/sign-in')}`, async () => {
     await delay(1000);
     const signInResponse: ISignInResponse = {
       value: { id: 123453245, accessToken: '12dasfjkdfvahjvf', email: '26dfgdg', name: 'user' },

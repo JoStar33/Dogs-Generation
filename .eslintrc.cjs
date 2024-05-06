@@ -17,6 +17,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'no-explicit-any': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    // 'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
 };
