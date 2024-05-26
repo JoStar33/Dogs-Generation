@@ -1,14 +1,14 @@
-import { ICoordinateDetailInfoResponse } from '@/types/coordinate';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
 
 interface IBottomSheet {
-  data?: ICoordinateDetailInfoResponse;
+  title?: string;
+  children?: React.ReactNode;
   handleCloseBottomSheet: () => void;
 }
 
-export default function BottomSheet({ data, handleCloseBottomSheet }: IBottomSheet) {
+export default function BottomSheet({ title, handleCloseBottomSheet, children }: IBottomSheet) {
   return (
     <S.BottomSheet
       exit={{
@@ -23,9 +23,10 @@ export default function BottomSheet({ data, handleCloseBottomSheet }: IBottomShe
     >
       <div className="bottom-sheet__header">
         <div className="bottom-sheet__header__mock" />
-        <p className="bottom-sheet__header__title">{data?.value.title}</p>
+        <p className="bottom-sheet__header__title">{title}</p>
         <MdClose size={30} cursor="pointer" onClick={handleCloseBottomSheet} />
       </div>
+      <div>{children}</div>
     </S.BottomSheet>
   );
 }
@@ -41,6 +42,7 @@ const S = {
     bottom: 0px;
     overflow: hidden;
     background-color: ${(props) => props.theme.colors.white};
+    padding: 0 10px;
     .bottom-sheet {
       &__header {
         width: 100%;
@@ -50,6 +52,7 @@ const S = {
         padding: 10px 10px;
         &__title {
           font-size: 1.3rem;
+          font-weight: 600;
         }
         &__mock {
           width: 30px;
