@@ -14,10 +14,12 @@ export default function Layout({ children }: IProps) {
   const [isOpenAside, setIsOpenAside] = React.useState(false);
   return (
     <S.Layout>
-      <AnimatePresence>{isOpenAside && <Aside setIsOpenAside={setIsOpenAside} />}</AnimatePresence>
-      <Header setIsOpenAside={setIsOpenAside} />
-      <Main>{children}</Main>
-      <BottomTab />
+      <div className="layout__cover">
+        <AnimatePresence>{isOpenAside && <Aside setIsOpenAside={setIsOpenAside} />}</AnimatePresence>
+        <Header setIsOpenAside={setIsOpenAside} />
+        <Main>{children}</Main>
+        <BottomTab />
+      </div>
     </S.Layout>
   );
 }
@@ -25,7 +27,18 @@ export default function Layout({ children }: IProps) {
 const S = {
   Layout: styled.div`
     width: 100%;
-    max-width: 500px;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    .layout {
+      &__cover {
+        position: relative;
+        overflow: hidden;
+        transform: scale(1);
+        width: 100%;
+        max-width: 500px;
+        height: 100vh;
+      }
+    }
   `,
 };
