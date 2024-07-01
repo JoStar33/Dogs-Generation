@@ -8,19 +8,18 @@ interface IBottomSheet {
   handleCloseBottomSheet: () => void;
 }
 
+const variants = {
+  hideBottomSheet: {
+    height: '0px',
+  },
+  animateBottomSheet: {
+    height: '33%',
+  },
+};
+
 export default function BottomSheet({ title, handleCloseBottomSheet, children }: IBottomSheet) {
   return (
-    <S.BottomSheet
-      exit={{
-        height: '0px',
-      }}
-      initial={{
-        height: '0px',
-      }}
-      animate={{
-        height: '400px',
-      }}
-    >
+    <S.BottomSheet variants={variants} exit="hideBottomSheet" initial="hideBottomSheet" animate="animateBottomSheet">
       <div className="bottom-sheet__header">
         <div className="bottom-sheet__header__mock" />
         <p className="bottom-sheet__header__title">{title}</p>

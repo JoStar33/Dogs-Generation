@@ -38,7 +38,7 @@ export default function HomeContainer() {
     queryKey: [queryKeys.coordinateList],
     requestAPI: Coordinate.Get.list,
     options: {
-      enabled: !!mapElement.current,
+      enabled: !!naverMapRef.current,
       staleTime: TEN_MINUTES,
     },
   };
@@ -51,15 +51,15 @@ export default function HomeContainer() {
     return { lat, lng };
   };
 
-  const handleZoomChangedMap = () => {
-    if (mapElement.current !== null) {
-      checkForMarkersRendering(mapElement.current as unknown as naver.maps.Map, marketMarkers);
+  const handleZoomChangedMap = (zoom: number) => {
+    if (naverMapRef.current !== null) {
+      checkForMarkersRendering(zoom, naverMapRef.current, marketMarkers);
     }
   };
 
   const handleDragEndMap = () => {
-    if (mapElement.current !== null) {
-      checkForMarkersRendering(mapElement.current as unknown as naver.maps.Map, marketMarkers);
+    if (naverMapRef.current !== null) {
+      checkForMarkersRendering(naverMapRef.current.getZoom(), naverMapRef.current, marketMarkers);
     }
   };
 
@@ -79,6 +79,7 @@ export default function HomeContainer() {
       isShow: true,
       coordinateId: element.id,
     });
+    naverMapRef.current?.setZoom(16, true);
     setTimeout(() => {
       marker.setAnimation(null);
     }, 2000);
@@ -93,6 +94,7 @@ export default function HomeContainer() {
 
       if (isDeniedPermission) return;
 
+      // Set My Place
       new naver.maps.Marker({
         position: location,
         map: naverMapRef.current,
@@ -131,12 +133,14 @@ export default function HomeContainer() {
 
   React.useEffect(
     function initializeVirtualizeMarkerEvent() {
-      if (!mapElement.current || !naver) return;
+      if (!naverMapRef.current || !naver) return;
       if (marketMarkers.length === 0) return;
-      const zoomchangeEvent = naver.maps.Event.addListener(mapElement.current, 'zoom_changed', handleZoomChangedMap);
-      const dragEndEvent = naver.maps.Event.addListener(mapElement.current, 'dragend', handleDragEndMap);
+      const zoomChangeEvent = naver.maps.Event.addListener(naverMapRef.current, 'zoom_changed', (zoom: number) =>
+        handleZoomChangedMap(zoom),
+      );
+      const dragEndEvent = naver.maps.Event.addListener(naverMapRef.current, 'dragend', handleDragEndMap);
 
-      return () => naver.maps.Event.removeListener([zoomchangeEvent, dragEndEvent]);
+      return () => naver.maps.Event.removeListener([zoomChangeEvent, dragEndEvent]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [marketMarkers],
