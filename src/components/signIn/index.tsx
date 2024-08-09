@@ -1,7 +1,10 @@
 import { ISignInForm } from '@/types/auth';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
-import FormInputA from '@/components/hookForm/FormInputA';
+import Form from '@/components/hookForm';
+import Button from '@/components/common/Button';
+import { useNavigate } from 'react-router-dom';
+import routerPath from '@/constants/routerPath';
 
 interface IProps {
   onSubmit: SubmitHandler<ISignInForm>;
@@ -9,6 +12,11 @@ interface IProps {
 
 export default function SignIn({ onSubmit }: IProps) {
   const { handleSubmit } = useFormContext<ISignInForm>();
+  const navigate = useNavigate();
+
+  const handleClickSignUp = () => {
+    navigate(routerPath.SIGN_UP);
+  };
 
   return (
     <S.SignIn>
@@ -16,11 +24,14 @@ export default function SignIn({ onSubmit }: IProps) {
         <h1>로그인</h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormInputA<ISignInForm> name="email" label="이메일" />
-        <FormInputA<ISignInForm> name="password" label="비밀번호" type="password" />
-        <button className="sign-in-button" type="submit">
-          LOGIN
-        </button>
+        <Form.InputA<ISignInForm> name="email" label="이메일" />
+        <Form.InputA<ISignInForm> name="password" label="비밀번호" type="password" />
+        <Button backgroundColor="mustard" buttonType="custom" borderRadius="5px" className="sign-in-button" type="submit">
+          SIGN IN
+        </Button>
+        <Button onClick={handleClickSignUp} backgroundColor="modernBlack" color="white" buttonType="custom" borderRadius="5px">
+          SIGN UP
+        </Button>
       </form>
     </S.SignIn>
   );
@@ -40,7 +51,6 @@ const S = {
     .sign-in-button {
       width: 100%;
       border: none;
-      border-radius: 8px;
       font-size: 1.4rem;
       height: 60px;
       font-weight: 700;

@@ -3,3 +3,7 @@ export interface DefaultResponse {
   detail: string | null;
   message: string;
 }
+
+export type TGender = 'WOMAN' | 'MAN';
+
+export type TYN = 'Y' | 'N';

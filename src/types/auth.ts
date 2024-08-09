@@ -1,4 +1,4 @@
-import { DefaultResponse } from '.';
+import { DefaultResponse, TGender, TYN } from '.';
 
 /*************************** Domain & DTO ***************************/
 export interface IUser {
@@ -12,6 +12,19 @@ export interface IUser {
 export interface ISignInForm {
   email: string;
   password: string;
+}
+
+export interface ISignUpForm {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+  age: number;
+  phoneNumber: string;
+  agreement: TYN;
+  gender: TGender;
+  address: string;
+  addressDetail: string;
 }
 
 /***************************** Request *****************************/

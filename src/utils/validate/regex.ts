@@ -26,7 +26,5 @@ export const regex = {
   optionLocalNumber: /^(0(2|3[1-3]|4[1-4]|5[1-5]|6[1-4]|70))(\d{3,4})(\d{4})$|^$/,
   tagTitleKor: /^(?=.*[가-힣])[가-힣a-zA-Z\d]*$/,
   tagTitleEng: /^(?=.*[a-zA-Z])[a-zA-Z_0-9]*$|^$/,
-  brandTitleKor: /^(?=.*[가-힣])[가-힣a-zA-Z\d\s\S]*$/,
-  brandTitleEng: /^(?=.*[a-zA-Z])([a-zA-Z\d\s\S]*)$/,
   twoDecimalPlaces: /^(?!0$)\d+(\.\d{0,2})?$/, //숫자, ., 소수점 두 자리까지 입력 가능
 };

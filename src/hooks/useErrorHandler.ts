@@ -19,7 +19,7 @@ export function useErrorHandler() {
         },
       }));
     }
-    const axiosError = error as AxiosError<DefaultResponse>;
+    const axiosError: AxiosError<DefaultResponse> = error;
     const isConnectionRefusedError = error.code?.includes('ERR_NETWORK');
     const isUnprocessableEntity = axiosError.response?.status === 422;
     const isInternalServerError = axiosError.response?.status === 500;

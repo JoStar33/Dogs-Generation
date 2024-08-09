@@ -4,7 +4,8 @@ import Home from '@/pages';
 import SignInPage from '@/pages/SignInPage';
 import { PublicRoute } from '@/components/routes/PublicRoute';
 import { PrivateRoute } from './components/routes/PrivateRoute';
-import UserPage from './pages/UserPage';
+import UserPage from '@/pages/UserPage';
+import SignUpPage from '@/pages/SignUpPage';
 
 export default function Router() {
   return (
@@ -12,6 +13,9 @@ export default function Router() {
       <Route path={routerPath.HOME} element={<Home />} />
       <Route element={<PublicRoute />}>
         <Route path={routerPath.SIGN_IN} element={<SignInPage />} />
+      </Route>
+      <Route element={<PublicRoute />}>
+        <Route path={routerPath.SIGN_UP} element={<SignUpPage />} />
       </Route>
       <Route element={<PrivateRoute />}>
         <Route path={routerPath.USER} element={<UserPage />} />

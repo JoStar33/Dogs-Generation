@@ -4,19 +4,18 @@ import { regex } from './regex';
 const SIGN_IN_ID_VALID_TEXT = '5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 입력 가능합니다.';
 const EMAIL_VALID_TEXT = '이메일 형식을 확인해주세요';
 const PASSWORD_VALID_TEXT = '영 대소문자,특수문자,숫자를 포함한 8자~16자';
+const PASSWORD_MATCH_TEXT = '비밀번호와 일치해야 합니다.';
 const PHONE_NUMBER_VALID_TEXT = '010으로 시작하는 "-"를 제외한 숫자만 입력 가능합니다';
 const LOCAL_NUMBER_VALID_TEXT = '"-"를 제외한 지역 전화번호만 입력 가능합니다';
 
 const REQUIRED_NUMBER_VALID_TEXT = '숫자만 입력 가능합니다.';
 const REQUIRED_OPTION_VALID_TEXT = '필수항목';
+const REQUIRED_AGREE_TEXT = '동의해주셔야 합니다.';
 const REQUIRED_INPUT_VALID_TEXT = '필수입력';
 const REQUIRED_IMAGE_VALID_TEXT = '이미지를 등록해주세요';
 const REQUIRED_MORE_ONE_IMAGE_VALID_TEXT = '이미지를 등록해주세요';
 const REQUIRED_TWO_DECIMAL_NUMBER_VALID_TEXT = '소수점 2자리 이내 숫자만 입력 가능';
 const REQUIRED_ENG_WITH_DASH_AND_NUMBER_VALID_TEXT = '영문필수, 숫자와 _만 입력 가능';
-
-const REQUIRED_KO_VALID_TEXT = '한글 필수';
-const REQUIRED_ENG_VALID_TEXT = '영문 필수';
 
 const KO_VALID_TEXT_1 = '모음 입력제한';
 const KO_VALID_TEXT_2 = '자음 입력제한';
@@ -52,7 +51,12 @@ export const validation = {
   SIGN_IN_ID: yup.string().required().matches(regex.signInId, SIGN_IN_ID_VALID_TEXT),
   EMAIL: yup.string().required().email(EMAIL_VALID_TEXT), //이메일
   PASSWORD: yup.string().required().matches(regex.password, PASSWORD_VALID_TEXT), //비밀번호
-  PASSWORD_CONFIRM: yup.string().required(), //비밀번호 확인
+  PASSWORD_CONFIRM: yup
+    .string()
+    .required()
+    .test('password-match', PASSWORD_MATCH_TEXT, function (value) {
+      return value === this.resolve(yup.ref('password'));
+    }), //비밀번호 확인
   PHONE_NUMBER: yup.string().required().matches(regex.phone, PHONE_NUMBER_VALID_TEXT),
   LOCAL_NUMBER: yup.string().required().matches(regex.localNumber, LOCAL_NUMBER_VALID_TEXT),
   IMAGE_FILES: yup.mixed().required(REQUIRED_MORE_ONE_IMAGE_VALID_TEXT),
@@ -62,9 +66,16 @@ export const validation = {
   REQUIRED_SELECT_BOX: yup.string().required(REQUIRED_OPTION_VALID_TEXT),
   REQUIRED_SELECT_BOX_2: yup.mixed().required(REQUIRED_OPTION_VALID_TEXT),
   REQUIRED_DATE: yup.string().required(),
+  REQUIRED_GENDER: yup.string().required().oneOf(['MAN', 'WOMAN'], REQUIRED_OPTION_VALID_TEXT),
+  REQUIRED_YES_OR_NO: yup.string().required().oneOf(['Y', 'N'], REQUIRED_OPTION_VALID_TEXT),
+  REQUIRED_YES_CHECK: yup
+    .string()
+    .required()
+    .oneOf(['Y', 'N'], REQUIRED_OPTION_VALID_TEXT)
+    .test('check-yes', REQUIRED_AGREE_TEXT, (value) => value === 'Y'),
   REQUIRED_ARRAY: yup.array().min(1, REQUIRED_INPUT_VALID_TEXT).required(),
-  REQUIRED_NUMBER: yup.string().required().matches(regex.onlyNumber, REQUIRED_NUMBER_VALID_TEXT),
-  OPTION_NUMBER: yup.string().matches(regex.onlyNumber, REQUIRED_NUMBER_VALID_TEXT).notRequired(),
+  REQUIRED_NUMBER: yup.number().required().typeError(REQUIRED_NUMBER_VALID_TEXT),
+  OPTION_NUMBER: yup.number().typeError(REQUIRED_NUMBER_VALID_TEXT).notRequired(),
   OPTION_LOCAL_NUMBER: yup.string().matches(regex.optionLocalNumber, LOCAL_NUMBER_VALID_TEXT).notRequired(), //비밀번호
   /**********************************************    Combined Validation      **************************************************/
   /**필수) 0부터 100까지의 숫자 */
@@ -154,47 +165,31 @@ export const validation = {
       .matches(regex.koreanOnly, KO_VALID_TEXT_4)
       .min(minLength, MORE_TEXT(minLength))
       .max(maxLength, LESS_TEXT(maxLength)),
-  /**필수 ) 텍스트 - 한글 1자 이상 필수 자음/모음(X) 특수문자(O) 영문(O) 숫자(0) 띄어쓰기(0)*/
-  REQUIRED_TEXT_7: ({ minLength, maxLength }: { minLength: number; maxLength: number }) =>
-    yup
-      .string()
-      .required()
-      .matches(regex.firstSpace, FIRST_SPACES_VALID_TEXT)
-      .matches(regex.lastSpace, LAST_SPACES_VALID_TEXT)
-      .matches(regex.gather, KO_VALID_TEXT_1)
-      .matches(regex.consonant, KO_VALID_TEXT_2)
-      .matches(regex.brandTitleKor, REQUIRED_KO_VALID_TEXT)
-      .min(minLength, MORE_TEXT(minLength))
-      .max(maxLength, LESS_TEXT(maxLength)),
-
-  /**필수 ) 텍스트 - 영문 1자 이상 필수 한글(X) 영문(O) 공백체크(O) 숫자(O) 띄어쓰기(O)*/
-  REQUIRED_TEXT_8: ({ minLength, maxLength }: { minLength: number; maxLength: number }) =>
-    yup
-      .string()
-      .required()
-      .matches(regex.firstSpace, FIRST_SPACES_VALID_TEXT)
-      .matches(regex.lastSpace, LAST_SPACES_VALID_TEXT)
-      .matches(regex.koreanNot, KO_VALID_TEXT_3)
-      .matches(regex.brandTitleEng, REQUIRED_ENG_VALID_TEXT)
-      .min(minLength, MORE_TEXT(minLength))
-      .max(maxLength, LESS_TEXT(maxLength)),
 
   /**필수 ) n 이상의 숫자*/
-  REQUIRED_NUMBER_2: ({ minNum }: { minNum: number }) => yup.number().required().moreThan(minNum, MORE_THAN_OR_EQUAL_NUMBER(minNum)),
+  REQUIRED_NUMBER_2: ({ minNum }: { minNum: number }) =>
+    yup.number().typeError(REQUIRED_NUMBER_VALID_TEXT).required().moreThan(minNum, MORE_THAN_OR_EQUAL_NUMBER(minNum)),
 
   /**필수 ) n 미만의 숫자*/
   REQUIRED_NUMBER_3: ({ maxNum }: { maxNum: number }) =>
     yup
       .number()
+      .typeError(REQUIRED_NUMBER_VALID_TEXT)
       .required()
       .lessThan(maxNum + 1, LESS_NUMBER(maxNum)),
 
   /**필수 ) n 초과 m 이하의 숫자*/
   REQUIRED_NUMBER_4: ({ minNum, maxNum }: { minNum: number; maxNum: number }) =>
-    yup.number().required().lessThan(maxNum, LESS_THAN_OR_EQUAL_NUMBER(maxNum)).moreThan(minNum, MORE_NUMBER(minNum)),
+    yup
+      .number()
+      .typeError(REQUIRED_NUMBER_VALID_TEXT)
+      .required()
+      .lessThan(maxNum, LESS_THAN_OR_EQUAL_NUMBER(maxNum))
+      .moreThan(minNum, MORE_NUMBER(minNum)),
 
   /**필수 ) n 초과의 숫자*/
-  REQUIRED_NUMBER_5: ({ minNum }: { minNum: number }) => yup.number().required().moreThan(minNum, MORE_NUMBER(minNum)),
+  REQUIRED_NUMBER_5: ({ minNum }: { minNum: number }) =>
+    yup.number().typeError(REQUIRED_NUMBER_VALID_TEXT).required().moreThan(minNum, MORE_NUMBER(minNum)),
 
   /**선택 ) 텍스트 - 자음/모음(X) 특수문자(O) 한글(O) 영문(O)*/
   OPTION_TEXT: ({ minLength, maxLength }: { minLength: number; maxLength: number }) =>

@@ -2,7 +2,7 @@ import React, { KeyboardEventHandler } from 'react';
 import styled, { css } from 'styled-components';
 import { useFormContext, Path, FieldValues } from 'react-hook-form';
 import { useHookFormMask } from 'use-mask-input';
-import FormErrorText from '@/components/hookForm/FormErrorText';
+import ErrorText from '@/components/hookForm/ErrorText';
 
 interface IProps<T> extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   name: Path<T>;
@@ -23,7 +23,7 @@ interface IProps<T> extends React.DetailedHTMLProps<React.InputHTMLAttributes<HT
   visibleError?: boolean;
 }
 
-export default function FormInputA<T extends FieldValues>({
+export default function InputA<T extends FieldValues>({
   className,
   margin,
   isFocusing,
@@ -64,7 +64,7 @@ export default function FormInputA<T extends FieldValues>({
   }, [isFocusing]);
 
   return (
-    <S.FormInputA margin={margin} className={className} maxWidth={maxWidth} height={height} disabled={disabled} readOnly={readOnly}>
+    <S.InputA margin={margin} className={className} maxWidth={maxWidth} height={height} disabled={disabled} readOnly={readOnly}>
       <div className="input-container">
         {label && (
           <StyledLabel required={required && !disabled} htmlFor={name}>
@@ -81,14 +81,14 @@ export default function FormInputA<T extends FieldValues>({
           {...(mask ? registerWithMask(name, mask, { autoUnmask: true }) : register(name))}
           {...rest}
         />
-        {visibleError && <FormErrorText errors={errors} name={name} />}
+        {visibleError && <ErrorText errors={errors} name={name} />}
       </div>
-    </S.FormInputA>
+    </S.InputA>
   );
 }
 
 const S = {
-  FormInputA: styled.div<{ margin?: string; maxWidth?: string; disabled?: boolean; readOnly?: boolean; height?: string }>`
+  InputA: styled.div<{ margin?: string; maxWidth?: string; disabled?: boolean; readOnly?: boolean; height?: string }>`
     width: 100%;
     max-width: ${(props) => props.maxWidth};
     margin: ${(props) => (props.margin ? props.margin : '0')};

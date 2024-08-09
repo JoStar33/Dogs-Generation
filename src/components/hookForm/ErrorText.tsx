@@ -8,16 +8,16 @@ interface IProps {
   margin?: string;
 }
 
-export default function FormErrorText({ name, errors, margin }: IProps) {
+export default function ErrorText({ name, errors, margin }: IProps) {
   return (
-    <S.FormErrorText margin={margin}>
+    <S.ErrorText margin={margin}>
       <ErrorMessage errors={errors} name={name} />
-    </S.FormErrorText>
+    </S.ErrorText>
   );
 }
 
 const S = {
-  FormErrorText: styled.div<{ margin?: string }>`
+  ErrorText: styled.div<{ margin?: string }>`
     height: 15px;
     font-size: 12px;
     color: ${(props) => props.theme.colors.red};

@@ -1,10 +1,10 @@
 import Auth from '@/api/auth';
-import SignIn from '@/components/sign-in';
+import SignIn from '@/components/signIn';
 import routerPath from '@/constants/routerPath';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import useLoading from '@/hooks/useLoading';
 import { ISignInForm } from '@/types/auth';
-import { schema } from '@/utils/schema';
+import { schema } from '@/utils/validate/schema';
 import { storage } from '@/utils/storage';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
