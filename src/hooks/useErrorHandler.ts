@@ -12,7 +12,7 @@ export function useErrorHandler() {
         ...prev,
         type: 'ALERT',
         titleText: '오류 발생',
-        descText: error?.message ? error.message : '잠시 후 다시 시도해주세요',
+        descText: error?.response?.data.message ? error?.response?.data.message : '잠시 후 다시 시도해주세요',
         confirmButtonText: '확인',
         onClickConfirm: () => {
           resetModalState();
@@ -22,6 +22,7 @@ export function useErrorHandler() {
     const axiosError: AxiosError<DefaultResponse> = error;
     const isConnectionRefusedError = error.code?.includes('ERR_NETWORK');
     const isUnprocessableEntity = axiosError.response?.status === 422;
+    const isInappropriateError = axiosError.response?.status === 400;
     const isInternalServerError = axiosError.response?.status === 500;
 
     if (isConnectionRefusedError) {
@@ -41,6 +42,19 @@ export function useErrorHandler() {
         ...prev,
         type: 'ALERT',
         titleText: '유효하지 않습니다.',
+        descText: axiosError.response?.data.message,
+        confirmButtonText: '확인',
+        onClickConfirm: () => {
+          resetModalState();
+        },
+      }));
+    }
+    if (isInappropriateError) {
+      console.log('run');
+      return setModalState((prev) => ({
+        ...prev,
+        type: 'ALERT',
+        titleText: '에러발생',
         descText: axiosError.response?.data.message,
         confirmButtonText: '확인',
         onClickConfirm: () => {

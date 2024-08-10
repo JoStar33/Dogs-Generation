@@ -28,7 +28,7 @@ const modalVariants = {
 
 function Alert() {
   const modalValue = useRecoilValue(modalWithText);
-  const computedDescTextArr = modalValue.descText?.split('\n');
+  const computedDescTextArr = modalValue.descText ? modalValue.descText.split('\n') : '';
 
   return (
     <Portal>
@@ -39,7 +39,9 @@ function Alert() {
               <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
             <h3 className="title-text">{modalValue.titleText}</h3>
-            <div className="desc-text-container">{computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>)}</div>
+            <div className="desc-text-container">
+              {computedDescTextArr ? computedDescTextArr.map((desc) => <p className="desc-text">{desc}</p>) : computedDescTextArr}
+            </div>
           </div>
           <button className="button-box__confirm" onClick={modalValue.onClickConfirm}>
             {modalValue.confirmButtonText}
@@ -52,7 +54,7 @@ function Alert() {
 
 function Confirm() {
   const modalValue = useRecoilValue(modalWithText);
-  const computedDescTextArr = modalValue.descText?.split('\n');
+  const computedDescTextArr = modalValue.descText ? modalValue.descText.split('\n') : '';
 
   return (
     <Portal>
@@ -63,7 +65,9 @@ function Confirm() {
               <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
             <h3 className="title-text">{modalValue.titleText}</h3>
-            <div className="desc-text-container">{computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>)}</div>
+            <div className="desc-text-container">
+              {computedDescTextArr ? computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>) : computedDescTextArr}
+            </div>
           </div>
           <div className="button-box">
             <button className="button-box__cancel" onClick={modalValue.onClickCancel}>

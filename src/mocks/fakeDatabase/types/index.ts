@@ -1,10 +1,11 @@
 export interface ICommonResponseReturn {
+  value?: any;
   code: number;
   message: string;
 }
 
 export interface IValueResponseReturn<T> {
-  data: T;
+  value: T;
   code: number;
   message: string;
 }

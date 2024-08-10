@@ -1,11 +1,9 @@
 import { DefaultResponse, TGender, TYN } from '.';
 
 /*************************** Domain & DTO ***************************/
-export interface IUser {
+export interface IUser extends ISignUpForm {
   id: number;
-  name: string;
-  email: string;
-  phoneNumber: string;
+  accessToken: string;
 }
 
 /******************************* Form ********************************/
@@ -34,10 +32,5 @@ export interface ISignUpRequest extends ISignUpForm {}
 
 /***************************** Response *****************************/
 export interface ISignInResponse extends DefaultResponse {
-  value: {
-    accessToken: string;
-    id: number;
-    name: string;
-    email: string;
-  };
+  value: IUser;
 }

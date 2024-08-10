@@ -15,6 +15,16 @@ const responseBody = <T extends Object = DefaultResponse>(response: AxiosRespons
 
 export const instance = axios.create(config);
 
+instance.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  },
+);
+
+
 export const requests = {
   get: <T extends DefaultResponse = DefaultResponse>(url: string) => instance.get<T>(url).then(responseBody),
   post: <T extends DefaultResponse = DefaultResponse>(url: string, body: object | FormData) =>
