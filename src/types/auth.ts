@@ -30,6 +30,8 @@ export interface ISignUpForm {
 /***************************** Request *****************************/
 export interface ISignInRequest extends ISignInForm {}
 
+export interface ISignUpRequest extends ISignUpForm {}
+
 /***************************** Response *****************************/
 export interface ISignInResponse extends DefaultResponse {
   value: {

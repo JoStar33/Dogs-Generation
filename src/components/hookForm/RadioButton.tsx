@@ -23,5 +23,6 @@ export default function RadioButton<T extends FieldValues>({ name, value, style,
 const S = {
   RadioButton: styled.label`
     display: flex;
+    gap: 10px;
   `,
 };

@@ -15,6 +15,6 @@ const S = {
     transform: rotate(0);
     height: calc(100% - 160px);
     padding: 10px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
   `,
 };
