@@ -1,14 +1,14 @@
 import { delay, http } from 'msw';
 import { ISignInRequest, ISignUpRequest } from '@/types/auth';
 import { commonUrl } from '.';
-import userDatabase from './fakeDatabase/userDatabase';
+import userDatabase from './fakeDatabase/resources/user';
 
 const authUrl = (path?: string) => `${commonUrl(`/auth${path}`)}`;
 
 const authHandler = [
   http.post(`${authUrl('/sign-in')}`, async ({ request }) => {
     const data = (await request.json()) as ISignInRequest;
-    const userDetail = userDatabase.GET.detail({ key: 'email', value: data.email });
+    const userDetail = userDatabase.Get.detail({ key: 'email', value: data.email });
     if (userDetail.code === 400)
       return new Response(
         JSON.stringify({
@@ -75,7 +75,7 @@ const authHandler = [
   }),
   http.post(`${authUrl('/sign-up')}`, async ({ request }) => {
     const data = (await request.json()) as ISignUpRequest;
-    const userDetail = userDatabase.GET.detail({ key: 'email', value: data.email });
+    const userDetail = userDatabase.Get.detail({ key: 'email', value: data.email });
 
     if (userDetail.code === 200) {
       return new Response(
@@ -93,7 +93,7 @@ const authHandler = [
       );
     }
 
-    const createdInfo = userDatabase.CREATE.user(data);
+    const createdInfo = userDatabase.Create.user(data);
 
     if (createdInfo.code !== 200) {
       return new Response(
