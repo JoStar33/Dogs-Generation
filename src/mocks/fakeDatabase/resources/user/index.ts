@@ -40,7 +40,12 @@ const userDatabase = {
       try {
         const userList = userDatabase.Get.list().value;
         const lastUserId = userList[userList.length] ? userList[userList.length].id : 0;
-        localStorage.setItem('userList', JSON.stringify([...userList, { id: lastUserId + 1, ...request }]));
+        const newUserInfo = {
+          id: lastUserId + 1,
+          ...request,
+          passwordConfirm: undefined,
+        };
+        localStorage.setItem('userList', JSON.stringify([...userList, newUserInfo]));
         return {
           code: 200,
           message: '사용자 등록 성공.',
@@ -53,7 +58,24 @@ const userDatabase = {
       }
     },
   },
-  Update: {},
+  Update: {
+    user: (request: ISignUpRequest) => {
+      try {
+        const userList = userDatabase.Get.list().value;
+        const lastUserId = userList[userList.length] ? userList[userList.length].id : 0;
+        localStorage.setItem('userList', JSON.stringify([...userList, { id: lastUserId + 1, ...request }]));
+        return {
+          code: 200,
+          message: '사용자 등록 성공.',
+        };
+      } catch (error: any) {
+        return {
+          code: 500,
+          message: '사용자 정보 수정중 에러발생',
+        };
+      }
+    },
+  },
   Delete: {},
 };
 

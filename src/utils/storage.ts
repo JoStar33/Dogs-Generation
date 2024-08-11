@@ -6,7 +6,7 @@ export const storage = {
   getAccessTokenLocalStorageItem: (): string | null => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (!accessToken) return null;
-    return JSON.parse(accessToken);
+    return accessToken;
   },
   removeAccessToken: () => localStorage.removeItem(ACCESS_TOKEN),
 };

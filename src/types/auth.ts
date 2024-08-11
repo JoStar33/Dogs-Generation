@@ -1,7 +1,7 @@
 import { DefaultResponse, TGender, TYN } from '.';
 
 /*************************** Domain & DTO ***************************/
-export interface IUser extends ISignUpForm {
+export interface IUser extends Omit<ISignUpForm, 'passwordConfirm' | 'agreement'> {
   id: number;
   accessToken: string;
 }
@@ -25,6 +25,19 @@ export interface ISignUpForm {
   addressDetail: string;
 }
 
+export interface IUpdateUserInfoForm {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+  age: number;
+  phoneNumber: string;
+  agreement: TYN;
+  gender: TGender;
+  address: string;
+  addressDetail: string;
+}
+
 /***************************** Request *****************************/
 export interface ISignInRequest extends ISignInForm {}
 
@@ -32,5 +45,9 @@ export interface ISignUpRequest extends ISignUpForm {}
 
 /***************************** Response *****************************/
 export interface ISignInResponse extends DefaultResponse {
+  value: IUser;
+}
+
+export interface IUserDetailResponse extends DefaultResponse {
   value: IUser;
 }

@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { DefaultResponse } from '@/types';
 import environment from '@/environment';
+import { storage } from '@/utils/storage';
+import routerPath from '@/constants/routerPath';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const VERSION = '/v1';
@@ -15,11 +17,46 @@ const responseBody = <T extends Object = DefaultResponse>(response: AxiosRespons
 
 export const instance = axios.create(config);
 
+instance.interceptors.request.use(
+  (config) => {
+    try {
+      const accessToken = storage.getAccessTokenLocalStorageItem();
+      console.log(accessToken);
+      if (accessToken) {
+        if (!instance.defaults.headers.common.Authorization) {
+          instance.defaults.headers.common['Authorization'] = accessToken;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  },
+);
+
 instance.interceptors.response.use(
   (config) => {
     return config;
   },
   async (error) => {
+    const { config, response } = error;
+    const shouldMissingToken = response?.status === 403;
+    if (shouldMissingToken) {
+      const accessToken = storage.getAccessTokenLocalStorageItem();
+      if (accessToken) {
+        instance.defaults.headers.common['Authorization'] = `${accessToken}`;
+        const freshRequest = {
+          ...config,
+          headers: { ...config.headers, Authorization: accessToken },
+        };
+        return instance.request(freshRequest);
+      }
+      window.location.href = routerPath.SIGN_IN
+      return;
+    }
     return Promise.reject(error);
   },
 );
