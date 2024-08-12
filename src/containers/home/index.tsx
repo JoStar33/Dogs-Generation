@@ -38,7 +38,6 @@ export default function HomeContainer() {
     queryKey: [queryKeys.coordinateList],
     requestAPI: Coordinate.Get.list,
     options: {
-      enabled: !!naverMapRef.current,
       staleTime: TEN_MINUTES,
     },
   };
@@ -128,7 +127,7 @@ export default function HomeContainer() {
       setMarketMarkers(computedMarkers);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [data, naverMapRef.current],
   );
 
   React.useEffect(

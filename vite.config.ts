@@ -10,11 +10,11 @@ export default defineConfig({
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
   },
   preview: {
-    port: 3000,
+    port: 3030,
     strictPort: true,
   },
   server: {
-    port: 3000,
+    port: 3030,
     strictPort: true,
     host: true,
   },

@@ -18,9 +18,13 @@ export default function User({ data, handleSignOut }: IUser) {
         <div className="user__icon-wrapper">
           <FaUser size={32} cursor="pointer" />
         </div>
-        <div>
-          <p className="user__name">{data.value.email}</p>
-          <p></p>
+        <div className="user__info--wrapper">
+          <p className="user__info--text">
+            <strong>이메일:</strong> {data.value.email}
+          </p>
+          <p className="user__info--text">
+            <strong>이름:</strong> {data.value.name}
+          </p>
         </div>
       </div>
       <button onClick={handleSignOut} className="sign-out-button" type="submit">
@@ -48,6 +52,18 @@ const S = {
     .user {
       &__info {
         display: flex;
+        align-items: center;
+        &--wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          margin-left: 10px;
+        }
+        &--text {
+          strong {
+            font-weight: 600;
+          }
+        }
       }
       &__icon-wrapper {
         border-radius: 100px;

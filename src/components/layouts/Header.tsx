@@ -17,7 +17,7 @@ export default function Header({ setIsOpenAside }: IProps) {
   return (
     <S.Header>
       <RxHamburgerMenu size={25} onClick={() => setIsOpenAside((prev) => !prev)} cursor="pointer" />
-      <Icons name="Logo" width="35px" height="35px" />
+      <Icons onClick={() => navigate(routerPath.HOME)} name="Logo" width="35px" height="35px" />
       {checkUserLoggedIn() ? (
         <FaUser size={25} cursor="pointer" onClick={() => navigate(routerPath.USER)} />
       ) : (
