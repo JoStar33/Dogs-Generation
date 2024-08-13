@@ -34,6 +34,7 @@ const S = {
     .checkbox {
       display: flex;
       margin-bottom: 5px;
+      gap: 10px;
       &__label {
         font-weight: 500;
       }

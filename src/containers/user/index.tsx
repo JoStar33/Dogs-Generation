@@ -1,5 +1,6 @@
 import Auth from '@/api/auth';
 import User from '@/components/user';
+import queryKeys from '@/constants/queryKeys';
 import routerPath from '@/constants/routerPath';
 import useSimpleQuery, { IUseSimpleQuery } from '@/hooks/useSimpleQuery';
 import { IUserDetailResponse } from '@/types/auth';
@@ -10,7 +11,7 @@ export default function UserContainer() {
   const navigate = useNavigate();
 
   const request: IUseSimpleQuery = {
-    queryKey: ['testsadf'],
+    queryKey: [queryKeys.USER],
     requestAPI: Auth.Get.userDetail,
     options: {},
   };

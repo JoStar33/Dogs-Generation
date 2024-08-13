@@ -1,5 +1,5 @@
 import authHandler from './auth';
 import coordinateHandler from './coordinate';
-import markerHandler from './market';
+import marketHandler from './market';
 
-export const handlers = [...authHandler, ...coordinateHandler, ...markerHandler];
+export const handlers = [...authHandler, ...coordinateHandler, ...marketHandler];

@@ -27,6 +27,17 @@ const S = {
     & * {
       cursor: pointer;
     }
+    .common-icon-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      &__text {
+        color: ${(props) => props.theme.colors.white};
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
     .home-wrapper {
       ${flexCenter}
       width: 65px;

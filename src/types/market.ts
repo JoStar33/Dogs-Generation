@@ -1,3 +1,4 @@
+import { DefaultResponse } from '.';
 import { IReview } from './review';
 
 /*************************** Domain & DTO ***************************/
@@ -31,5 +32,11 @@ export interface IMenu {
 /******************************* Form ********************************/
 
 /***************************** Request *****************************/
+export interface IMarketListRequest {
+  searchKeyword: string;
+}
 
 /***************************** Response *****************************/
+export interface IMarketListResponse extends DefaultResponse {
+  value: IMarketListElement[];
+}

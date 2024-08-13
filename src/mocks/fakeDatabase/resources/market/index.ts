@@ -404,10 +404,9 @@ const marketList: IMarketListElement[] = [
   {
     id: 51,
     title: 'Canine Lounge',
-    address: '서울특별시 송파구 잠실동',
+    address: '경기도 수원시 영통구',
     averageRate: 4.6,
-    image:
-      'https://images.unsplash.com/photo-1587486924816-1a6c74a38bd7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&q=80&w=400',
+    image: 'https://tong.visitkorea.or.kr/cms/resource/22/2892722_image2_1.jpg',
   },
 ];
 

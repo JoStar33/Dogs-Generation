@@ -3,7 +3,7 @@ import userDatabase from '../fakeDatabase/resources/user';
 import CustomResponse from '../utils/customResponse';
 import { commonUrl } from '..';
 
-const authUrl = (path?: string) => `${commonUrl(`/auth${path}`)}`;
+const authUrl = (path?: string) => `${commonUrl(`/auth${path ?? ''}`)}`;
 
 const authGetHandler = [
   http.get(`${authUrl('/user')}`, async ({ request }) => {

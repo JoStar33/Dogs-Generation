@@ -1,5 +1,5 @@
 import marketGetHandler from './marketGetHandler';
 
-const markerHandler = [...marketGetHandler];
+const marketHandler = [...marketGetHandler];
 
-export default markerHandler;
+export default marketHandler;

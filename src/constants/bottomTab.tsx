@@ -1,6 +1,9 @@
 import { IoHome } from 'react-icons/io5';
 import routerPath from './routerPath';
+import { IoStorefrontSharp } from 'react-icons/io5';
+import { BsFillPostcardFill } from 'react-icons/bs';
 import React from 'react';
+import { colors } from '@/styles/Theme';
 
 interface IBottomTabElement {
   priority: number;
@@ -13,8 +16,13 @@ const bottomTab: IBottomTabElement[] = [
   {
     priority: 2,
     title: 'MARKETS',
-    path: routerPath.HOME,
-    icon: () => <IoHome size={40} />,
+    path: routerPath.MARKET,
+    icon: () => (
+      <div className="common-icon-wrapper">
+        <IoStorefrontSharp fill={colors.white} size={40} />
+        <span className="common-icon-wrapper__text">MARKET</span>
+      </div>
+    ),
   },
   {
     priority: 1,
@@ -31,8 +39,13 @@ const bottomTab: IBottomTabElement[] = [
   {
     priority: 3,
     title: 'CONTENTS',
-    path: routerPath.HOME,
-    icon: () => <IoHome size={40} />,
+    path: routerPath.CONTENTS,
+    icon: () => (
+      <div className="common-icon-wrapper">
+        <BsFillPostcardFill fill={colors.white} size={40} />
+        <span className="common-icon-wrapper__text">CONTENTS</span>
+      </div>
+    ),
   },
 ];
 
