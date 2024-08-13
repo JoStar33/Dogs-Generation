@@ -6,4 +6,6 @@ export interface DefaultResponse {
 
 export type TGender = 'WOMAN' | 'MAN';
 
+export type TMarketType = 'RESTAURANT' | 'CAFE';
+
 export type TYN = 'Y' | 'N';

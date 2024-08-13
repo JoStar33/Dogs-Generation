@@ -5,6 +5,7 @@ import Header from './Header';
 import BottomTab from './BottomTab';
 import Aside from './Aside';
 import { AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 interface IProps {
   children: React.ReactNode;
@@ -12,6 +13,15 @@ interface IProps {
 
 export default function Layout({ children }: IProps) {
   const [isOpenAside, setIsOpenAside] = React.useState(false);
+  const { pathname } = useLocation();
+
+  React.useEffect(
+    function autoCloser() {
+      setIsOpenAside(false);
+    },
+    [pathname],
+  );
+
   return (
     <S.Layout>
       <div className="layout__cover">
@@ -27,7 +37,7 @@ export default function Layout({ children }: IProps) {
 const S = {
   Layout: styled.div`
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     .layout {
@@ -37,7 +47,7 @@ const S = {
         transform: scale(1);
         width: 100%;
         max-width: 500px;
-        height: 100vh;
+        height: 100dvh;
       }
     }
   `,

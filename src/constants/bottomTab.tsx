@@ -3,6 +3,7 @@ import routerPath from './routerPath';
 import React from 'react';
 
 interface IBottomTabElement {
+  priority: number;
   title: string;
   path: string;
   icon: () => React.ReactElement;
@@ -10,7 +11,14 @@ interface IBottomTabElement {
 
 const bottomTab: IBottomTabElement[] = [
   {
-    title: 'home',
+    priority: 2,
+    title: 'MARKETS',
+    path: routerPath.HOME,
+    icon: () => <IoHome size={40} />,
+  },
+  {
+    priority: 1,
+    title: 'HOME',
     path: routerPath.HOME,
     icon: () => (
       <div className="home-wrapper">
@@ -19,6 +27,12 @@ const bottomTab: IBottomTabElement[] = [
         </div>
       </div>
     ),
+  },
+  {
+    priority: 3,
+    title: 'CONTENTS',
+    path: routerPath.HOME,
+    icon: () => <IoHome size={40} />,
   },
 ];
 

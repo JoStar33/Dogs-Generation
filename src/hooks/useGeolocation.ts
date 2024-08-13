@@ -30,11 +30,12 @@ export default function useGeolocation() {
   };
 
   React.useEffect(function initializeGeolocation() {
-    if (!('geolocation' in navigator))
+    if (!('geolocation' in navigator)) {
       onError({
         code: 0,
         message: '해당 브라우저는 GPS 기능을 지원하지 않습니다!',
       });
+    }
 
     const watch = navigator.geolocation.watchPosition(onSuccess, onError, watchOptions);
     return () => navigator.geolocation.clearWatch(watch);

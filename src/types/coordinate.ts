@@ -1,6 +1,6 @@
 /*************************** Domain & DTO ***************************/
 
-import { DefaultResponse } from '.';
+import { DefaultResponse, TMarketType } from '.';
 
 /**
  * @param lat 위도
@@ -14,6 +14,7 @@ export interface ICoordinate {
 export interface ICoordinateItem {
   id: number;
   title: string;
+  type: TMarketType;
   coordinate: ICoordinate;
 }
 
@@ -21,6 +22,7 @@ export interface ICoordinateDetailInfo {
   id: number;
   title: string;
   address: string;
+  type: TMarketType;
   phoneNumber: string;
   image: string;
 }

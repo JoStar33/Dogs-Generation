@@ -2,6 +2,8 @@ import { flexCenter } from '@/styles/Common';
 import { IUserDetailResponse } from '@/types/auth';
 import { FaUser } from 'react-icons/fa';
 import styled from 'styled-components';
+import Button from '@/components/common/Button';
+import Line from '@/components/common/Line';
 
 interface IUser {
   data: IUserDetailResponse;
@@ -27,9 +29,16 @@ export default function User({ data, handleSignOut }: IUser) {
           </p>
         </div>
       </div>
-      <button onClick={handleSignOut} className="sign-out-button" type="submit">
+      <Line margin="25px 0" isVertical={false} />
+      <div className="user__info--wrapper">
+        <p className="user__info--text">
+          <strong>전화번호:</strong> {data.value.phoneNumber}
+        </p>
+      </div>
+      <Line margin="25px 0" isVertical={false} />
+      <Button onClick={handleSignOut} borderRadius="5px" backgroundColor="red" color="white" buttonType="custom" type="submit">
         LOGOUT
-      </button>
+      </Button>
     </S.User>
   );
 }
@@ -53,11 +62,11 @@ const S = {
       &__info {
         display: flex;
         align-items: center;
+        gap: 10px;
         &--wrapper {
           display: flex;
           flex-direction: column;
           gap: 5px;
-          margin-left: 10px;
         }
         &--text {
           strong {

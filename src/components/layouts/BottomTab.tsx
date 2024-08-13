@@ -17,7 +17,10 @@ export default function BottomTab() {
 
 const S = {
   BottomTab: styled.div`
-    ${flexCenter}
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 20px;
     width: 100%;
     height: 80px;
     background-color: ${(props) => props.theme.colors.subMain};

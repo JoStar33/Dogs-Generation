@@ -1,6 +1,10 @@
 import { Variants, motion } from 'framer-motion';
 import styled from 'styled-components';
 import { IoMdClose } from 'react-icons/io';
+import bottomTab from '@/constants/bottomTab';
+import { useNavigate } from 'react-router-dom';
+import routerPath from '@/constants/routerPath';
+import React from 'react';
 
 const variants: Variants = {
   hidden: {
@@ -20,12 +24,27 @@ interface IProps {
 }
 
 export default function Aside({ setIsOpenAside }: IProps) {
+  const navigate = useNavigate();
+
+  const handleClickMenuItem = () => {
+    setIsOpenAside(false);
+    navigate(routerPath.HOME);
+  };
+
   return (
     <S.Aside variants={variants} initial="hidden" animate="show" exit="hidden">
       <div className="aside-header">
         <IoMdClose onClick={() => setIsOpenAside(false)} size={40} fill="#ffffff" cursor="pointer" />
       </div>
-      Aside
+      <div className="aside-body">
+        {bottomTab
+          .sort((a, b) => (a.priority > b.priority ? 1 : -1))
+          .map((tabElement) => (
+            <div className="aside-body__element" onClick={handleClickMenuItem}>
+              {tabElement.title}
+            </div>
+          ))}
+      </div>
     </S.Aside>
   );
 }
@@ -42,6 +61,21 @@ const S = {
       width: 100%;
       display: flex;
       justify-content: flex-end;
+    }
+    .aside-body {
+      margin-left: 15px;
+      margin-top: 15;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      &__element {
+        width: 100%;
+        user-select: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.3rem;
+        color: ${(props) => props.theme.colors.white};
+      }
     }
   `,
 };
