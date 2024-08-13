@@ -5,6 +5,9 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "allowJs": true, // JavaScript 파일의 사용을 허용
+    "checkJs": false, // JavaScript 파일에서 타입 체크 비활성화
+    "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
