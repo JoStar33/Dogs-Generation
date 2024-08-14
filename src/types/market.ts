@@ -1,4 +1,4 @@
-import { DefaultResponse } from '.';
+import { DefaultResponse, TMarketType } from '.';
 import { IReview } from './review';
 
 /*************************** Domain & DTO ***************************/
@@ -8,6 +8,8 @@ export interface IMarketListElement {
   address: string;
   averageRate: number;
   image: string;
+  type: TMarketType;
+  phoneNumber: string;
 }
 
 export interface IMarket {

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { IoMdClose } from 'react-icons/io';
 import bottomTab from '@/constants/bottomTab';
 import { useNavigate } from 'react-router-dom';
-import routerPath from '@/constants/routerPath';
 import React from 'react';
 
 const variants: Variants = {
@@ -26,9 +25,9 @@ interface IProps {
 export default function Aside({ setIsOpenAside }: IProps) {
   const navigate = useNavigate();
 
-  const handleClickMenuItem = () => {
+  const handleClickMenuItem = (path: string) => {
     setIsOpenAside(false);
-    navigate(routerPath.HOME);
+    navigate(path);
   };
 
   return (
@@ -37,10 +36,10 @@ export default function Aside({ setIsOpenAside }: IProps) {
         <IoMdClose onClick={() => setIsOpenAside(false)} size={40} fill="#ffffff" cursor="pointer" />
       </div>
       <div className="aside-body">
-        {bottomTab
+        {[...bottomTab]
           .sort((a, b) => (a.priority > b.priority ? 1 : -1))
           .map((tabElement) => (
-            <div className="aside-body__element" onClick={handleClickMenuItem}>
+            <div className="aside-body__element" onClick={() => handleClickMenuItem(tabElement.path)}>
               {tabElement.title}
             </div>
           ))}
@@ -67,7 +66,7 @@ const S = {
       margin-top: 15;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
       &__element {
         width: 100%;
         user-select: none;
