@@ -5,7 +5,7 @@ const queryClientDefaultOptions: QueryClientConfig = {
     queries: {
       refetchOnMount: true,
       refetchOnReconnect: true,
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
       retryDelay: 1,
       retry: 0,
     },

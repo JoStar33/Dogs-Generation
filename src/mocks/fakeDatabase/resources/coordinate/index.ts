@@ -8,7 +8,7 @@ const coordinateList: ICoordinateItem[] = [
   { id: 5, title: 'Paws & Coffee', coordinate: { lat: 37.4563, lng: 126.7052 }, type: 'CAFE' },
   { id: 6, title: 'Barkery Cafe', coordinate: { lat: 35.1595, lng: 126.8526 }, type: 'CAFE' },
   { id: 7, title: 'Canine Cafe Corner', coordinate: { lat: 36.351, lng: 127.385 }, type: 'CAFE' },
-  { id: 8, title: 'Pooch Plaza Cafe', coordinate: { lat: 37.5665, lng: 126.978 }, type: 'CAFE' },
+  { id: 8, title: 'Pooch Plaza Cafe', coordinate: { lat: 37.5265, lng: 126.938 }, type: 'CAFE' },
   { id: 9, title: 'Doggy Delights', coordinate: { lat: 36.6358, lng: 127.4913 }, type: 'RESTAURANT' },
   { id: 10, title: "Pup's Place", coordinate: { lat: 37.2747, lng: 127.0196 }, type: 'CAFE' },
   { id: 11, title: 'Woof Woof Cafe', coordinate: { lat: 35.9916, lng: 129.3858 }, type: 'CAFE' },
@@ -37,7 +37,7 @@ const coordinateList: ICoordinateItem[] = [
   { id: 34, title: 'Barkery Cafe', coordinate: { lat: 37.2447, lng: 127.0196 }, type: 'CAFE' },
   { id: 35, title: 'Canine Cafe Corner', coordinate: { lat: 35.9916, lng: 129.3858 }, type: 'CAFE' },
   { id: 36, title: 'Pooch Plaza Cafe', coordinate: { lat: 34.8051, lng: 126.3945 }, type: 'CAFE' },
-  { id: 37, title: 'Doggy Delights', coordinate: { lat: 34.9476, lng: 127.4956 }, type: 'RESTAURANT' },
+  { id: 37, title: 'Doggy Delights', coordinate: { lat: 34.9176, lng: 127.4856 }, type: 'RESTAURANT' },
   { id: 38, title: "Pup's Place", coordinate: { lat: 35.1796, lng: 129.0756 }, type: 'CAFE' },
   { id: 39, title: 'Woof Woof Cafe', coordinate: { lat: 33.5097, lng: 126.5219 }, type: 'CAFE' },
   { id: 40, title: "Puppy's Paradise", coordinate: { lat: 37.2665, lng: 127.978 }, type: 'CAFE' },
@@ -50,7 +50,7 @@ const coordinateList: ICoordinateItem[] = [
   { id: 47, title: 'Bark & Brew', coordinate: { lat: 35.5391, lng: 129.3107 }, type: 'CAFE' },
   { id: 48, title: 'Furry Cafe', coordinate: { lat: 37.5665, lng: 126.978 }, type: 'CAFE' },
   { id: 49, title: 'Doggy Spot', coordinate: { lat: 36.351, lng: 127.385 }, type: 'RESTAURANT' },
-  { id: 50, title: 'Pup Cafe', coordinate: { lat: 37.4563, lng: 126.7052 }, type: 'CAFE' },
+  { id: 50, title: 'Pup Cafe', coordinate: { lat: 37.4533, lng: 126.7042 }, type: 'CAFE' },
   { id: 51, title: '케뷔와', coordinate: { lat: 37.28214, lng: 127.0644 }, type: 'CAFE' },
 ];
 

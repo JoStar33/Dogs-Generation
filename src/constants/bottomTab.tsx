@@ -47,6 +47,6 @@ const bottomTab: IBottomTabElement[] = [
       </div>
     ),
   },
-];
+] as const;
 
 export default bottomTab;

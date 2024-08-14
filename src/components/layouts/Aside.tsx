@@ -60,13 +60,14 @@ const S = {
       width: 100%;
       display: flex;
       justify-content: flex-end;
+      margin-bottom: 40px;
     }
     .aside-body {
       margin-left: 15px;
       margin-top: 15;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 30px;
       &__element {
         width: 100%;
         user-select: none;

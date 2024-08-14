@@ -14,11 +14,17 @@ import { AnimatePresence } from 'framer-motion';
 import { makeMarkerClustering } from '@/libs/makeMarkerClustering.js';
 
 const TEN_MINUTES = 10 * 60 * 1000;
+const STOP_ANIMATION_TIME = 2 * 1000;
 
 export interface IBottomSheetState {
   isShow: boolean;
   coordinateId: number;
 }
+
+const initBottomSheetState = {
+  isShow: false,
+  coordinateId: 0,
+};
 
 export default function HomeContainer() {
   const { naver } = window;
@@ -28,10 +34,7 @@ export default function HomeContainer() {
   const currentEventListRef = React.useRef<naver.maps.MapEventListener[]>([]);
   const initSuccessCheckerRef = React.useRef(false);
   const [marketMarkers, setMarketMarkers] = React.useState<naver.maps.Marker[]>([]);
-  const [bottomSheetState, setBottomSheetState] = React.useState<IBottomSheetState>({
-    isShow: false,
-    coordinateId: 0,
-  });
+  const [bottomSheetState, setBottomSheetState] = React.useState<IBottomSheetState>(initBottomSheetState);
   const userLocation = useGeolocation();
 
   const isErrorLoadLocation = !userLocation.loaded && userLocation.coordinates;
@@ -83,7 +86,7 @@ export default function HomeContainer() {
     naverMapRef.current?.setZoom(16, true);
     setTimeout(() => {
       marker.setAnimation(null);
-    }, 2000);
+    }, STOP_ANIMATION_TIME);
   };
 
   React.useEffect(

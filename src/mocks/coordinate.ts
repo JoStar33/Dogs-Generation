@@ -1,9 +1,11 @@
 //37.28214, 127.0644
 
-import { ICoordinateDetailInfoResponse, ICoordinateListResponse } from '@/types/coordinate';
+import { ICoordinateListResponse } from '@/types/coordinate';
 import { delay, http } from 'msw';
 import { commonUrl } from '.';
 import { coordinateList } from './fakeDatabase/resources/coordinate';
+import { marketList } from './fakeDatabase/resources/market';
+import CustomResponse from './utils/customResponse';
 
 //coordinate
 const coordinateUrl = (path?: string) => `${commonUrl(`/coordinate${path ?? ''}`)}`;
@@ -23,25 +25,29 @@ const coordinateHandler = [
       },
     });
   }),
-  http.get(`${coordinateUrl('/51')}`, async () => {
+  http.get(`${coordinateUrl('/*')}`, async ({ request }) => {
     await delay(2000);
-    const coordinateDetailInfoResponse: ICoordinateDetailInfoResponse = {
-      value: {
-        id: 51,
-        title: '케뷔와',
-        address: '경기도 수원시 영통구 광교호수로 139 나루터 선착장 앞',
-        type: 'CAFE',
-        image: 'https://tong.visitkorea.or.kr/cms/resource/22/2892722_image2_1.jpg',
-        phoneNumber: '070-7722-2777',
-      },
+    const urlObj = new URL(request.url);
+    const pathSegments = urlObj.pathname.split('/');
+    const lastPathSegment = pathSegments[pathSegments.length - 1];
+    const marketId = parseInt(lastPathSegment);
+    if (isNaN(parseInt(lastPathSegment))) {
+      return CustomResponse({
+        code: 404,
+        message: '마켓정보를 찾을 수 없습니다.',
+      });
+    }
+    const marketInfo = marketList.find((element) => element.id === marketId);
+    if (!marketInfo) {
+      return CustomResponse({
+        code: 404,
+        message: '마켓정보를 찾을 수 없습니다.',
+      });
+    }
+    return CustomResponse({
       code: 200,
-      detail: 'success',
-      message: '성공',
-    };
-    return new Response(JSON.stringify(coordinateDetailInfoResponse), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      value: marketInfo,
+      message: '성공!',
     });
   }),
 ];

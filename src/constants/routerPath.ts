@@ -5,6 +5,6 @@ const routerPath = {
   USER: '/user',
   MARKET: '/market',
   CONTENTS: '/contents',
-};
+} as const;
 
 export default routerPath;
