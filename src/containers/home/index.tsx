@@ -13,7 +13,7 @@ import BottomSheetContainer from './BottomSheetContainer';
 import { AnimatePresence } from 'framer-motion';
 import { makeMarkerClustering } from '@/libs/makeMarkerClustering.js';
 
-const TEN_MINUTES = 10 * 60 * 1000;
+const TEN_MINUTES = 3 * 60 * 1000;
 const STOP_ANIMATION_TIME = 2 * 1000;
 
 export interface IBottomSheetState {

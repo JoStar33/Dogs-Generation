@@ -21,7 +21,6 @@ instance.interceptors.request.use(
   (config) => {
     try {
       const accessToken = storage.getAccessTokenLocalStorageItem();
-      console.log(accessToken);
       if (accessToken) {
         if (!instance.defaults.headers.common.Authorization) {
           instance.defaults.headers.common['Authorization'] = accessToken;

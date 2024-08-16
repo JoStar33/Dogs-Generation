@@ -3,6 +3,7 @@ import userDatabase from '../fakeDatabase/resources/user';
 import { delay, http } from 'msw';
 import { commonUrl } from '..';
 import CustomResponse from '../utils/customResponse';
+import { crypto } from '@/utils/crypto';
 const authUrl = (path?: string) => `${commonUrl(`/auth${path}`)}`;
 
 const authPostHandler = [
@@ -26,7 +27,7 @@ const authPostHandler = [
     }
 
     await delay(1000);
-    const accessToken = `${userDetail.value.email}/${userDetail.value.id}`;
+    const accessToken = crypto.encryptionAES(`${userDetail.value.email}/${userDetail.value.id}`);
     return CustomResponse({
       code: 200,
       message: '로그인 성공!',
