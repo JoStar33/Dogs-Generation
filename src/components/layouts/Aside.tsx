@@ -38,8 +38,8 @@ export default function Aside({ setIsOpenAside }: IProps) {
       <div className="aside-body">
         {[...bottomTab]
           .sort((a, b) => (a.priority > b.priority ? 1 : -1))
-          .map((tabElement) => (
-            <div className="aside-body__element" onClick={() => handleClickMenuItem(tabElement.path)}>
+          .map((tabElement, index) => (
+            <div key={index} className="aside-body__element" onClick={() => handleClickMenuItem(tabElement.path)}>
               {tabElement.title}
             </div>
           ))}

@@ -1,20 +1,24 @@
 import { http } from 'msw';
 import { commonUrl } from '..';
-import { marketList } from '../fakeDatabase/resources/market';
 import CustomResponse from '../utils/customResponse';
+import { marketDatabase } from '../fakeDatabase/resources/market';
 
 const marketUrl = (path?: string) => `${commonUrl(`/market${path ?? ''}`)}`;
 
 const marketGetHandler = [
   http.get(`${marketUrl()}`, ({ request }) => {
+    const marketList = marketDatabase.Get.list().value;
     try {
       const urlObj = new URL(request.url);
       const params = urlObj.searchParams;
-      if ('searchKeyword' in params) {
-        const searchedMarketList = marketList.map(
-          (marketElement) =>
-            marketElement.title.includes(params.searchKeyword as string) || marketElement.address.includes(params.searchKeyword as string),
-        );
+      const searchKeyword = params.get('searchKeyword');
+      if (params.has('searchKeyword')) {
+        const searchedMarketList = marketList.filter((marketElement) => {
+          return (
+            marketElement.title.toLowerCase().includes((searchKeyword as string).toLowerCase()) ||
+            marketElement.address.toLowerCase().includes((searchKeyword as string).toLowerCase())
+          );
+        });
         return CustomResponse({
           value: searchedMarketList,
           message: '성공!',

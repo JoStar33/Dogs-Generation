@@ -3,8 +3,8 @@
 import { ICoordinateListResponse } from '@/types/coordinate';
 import { delay, http } from 'msw';
 import { commonUrl } from '.';
-import { coordinateList } from './fakeDatabase/resources/coordinate';
-import { marketList } from './fakeDatabase/resources/market';
+import { coordinateDatabase } from './fakeDatabase/resources/coordinate';
+import { marketDatabase } from './fakeDatabase/resources/market';
 import CustomResponse from './utils/customResponse';
 
 //coordinate
@@ -12,6 +12,7 @@ const coordinateUrl = (path?: string) => `${commonUrl(`/coordinate${path ?? ''}`
 
 const coordinateHandler = [
   http.get(`${coordinateUrl()}`, async () => {
+    const coordinateList = coordinateDatabase.Get.list().value;
     await delay(2000);
     const coordinateListResponse: ICoordinateListResponse = {
       value: coordinateList,
@@ -27,6 +28,7 @@ const coordinateHandler = [
   }),
   http.get(`${coordinateUrl('/*')}`, async ({ request }) => {
     await delay(2000);
+    const marketList = marketDatabase.Get.list().value;
     const urlObj = new URL(request.url);
     const pathSegments = urlObj.pathname.split('/');
     const lastPathSegment = pathSegments[pathSegments.length - 1];

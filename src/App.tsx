@@ -12,11 +12,17 @@ import Loading from './components/common/Loading';
 import DarkBackground from './components/common/DarkBackground';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import queryClientDefaultOptions from './constants/queryClientDefaultOptions';
+import databaseInitializer from './mocks/fakeDatabase';
+import React from 'react';
 
 export default function App() {
   const queryClient = new QueryClient(queryClientDefaultOptions);
   const modalWithTextValue = useRecoilValue(modalWithText);
   const loadingValue = useRecoilValue(loadingState);
+
+  React.useEffect(() => {
+    databaseInitializer();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

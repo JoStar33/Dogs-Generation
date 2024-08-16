@@ -1,4 +1,19 @@
 import { IMarketListElement } from '@/types/market';
+import databaseKey from '../../constants/databaseKey';
+
+const marketDatabase = {
+  Get: {
+    list: () => {
+      const localStorageMarketList = localStorage.getItem(databaseKey.marketList) ?? '';
+      const parsedMarketList: IMarketListElement[] = localStorageMarketList ? JSON.parse(localStorageMarketList) : [];
+      return {
+        code: 200,
+        value: parsedMarketList,
+        message: '회원목록 조회 성공',
+      };
+    },
+  },
+};
 
 const marketList: IMarketListElement[] = [
   {
@@ -510,4 +525,10 @@ const marketList: IMarketListElement[] = [
   },
 ];
 
-export { marketList };
+const initializeMarketDatabase = () => {
+  const marketLocalStorageList = localStorage.getItem(databaseKey.marketList);
+  if (marketLocalStorageList && marketLocalStorageList?.length !== 0) return;
+  localStorage.setItem(databaseKey.marketList, JSON.stringify(marketList));
+};
+
+export { marketDatabase, marketList, initializeMarketDatabase };

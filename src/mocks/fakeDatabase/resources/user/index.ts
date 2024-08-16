@@ -1,10 +1,11 @@
 import { ISignUpRequest } from '@/types/auth';
 import { IDatabaseUser } from '../../types/auth';
+import databaseKey from '../../constants/databaseKey';
 
 const userDatabase = {
   Get: {
     list: () => {
-      const localStorageUserList = localStorage.getItem('userList') ?? '';
+      const localStorageUserList = localStorage.getItem(databaseKey.userList) ?? '';
       const parsedUserList: IDatabaseUser[] = localStorageUserList ? JSON.parse(localStorageUserList) : [];
       return {
         code: 200,
@@ -45,7 +46,7 @@ const userDatabase = {
           ...request,
           passwordConfirm: undefined,
         };
-        localStorage.setItem('userList', JSON.stringify([...userList, newUserInfo]));
+        localStorage.setItem(databaseKey.userList, JSON.stringify([...userList, newUserInfo]));
         return {
           code: 200,
           message: '사용자 등록 성공.',
@@ -63,7 +64,7 @@ const userDatabase = {
       try {
         const userList = userDatabase.Get.list().value;
         const lastUserId = userList[userList.length] ? userList[userList.length].id : 0;
-        localStorage.setItem('userList', JSON.stringify([...userList, { id: lastUserId + 1, ...request }]));
+        localStorage.setItem(databaseKey.userList, JSON.stringify([...userList, { id: lastUserId + 1, ...request }]));
         return {
           code: 200,
           message: '사용자 등록 성공.',

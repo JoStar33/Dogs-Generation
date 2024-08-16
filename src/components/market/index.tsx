@@ -1,6 +1,7 @@
 import { IMarketListResponse } from '@/types/market';
 import styled from 'styled-components';
 import MarketCard from './MarketCard';
+import MarketSearchInput from './MarketSearchInput';
 
 interface IProps {
   data: IMarketListResponse;
@@ -9,9 +10,12 @@ interface IProps {
 export default function Market({ data }: IProps) {
   return (
     <S.Market>
-      {data.value.map((element) => (
-        <MarketCard element={element} />
-      ))}
+      <MarketSearchInput />
+      <div className="market-card-wrapper">
+        {data.value.map((element) => (
+          <MarketCard element={element} />
+        ))}
+      </div>
     </S.Market>
   );
 }
@@ -19,6 +23,10 @@ export default function Market({ data }: IProps) {
 const S = {
   Market: styled.div`
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    .market-card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
   `,
 };

@@ -1,4 +1,19 @@
 import { ICoordinateItem } from '@/types/coordinate';
+import databaseKey from '../../constants/databaseKey';
+
+const coordinateDatabase = {
+  Get: {
+    list: () => {
+      const localStorageCoordinateList = localStorage.getItem(databaseKey.coordinateList) ?? '';
+      const parsedCoordinateList: ICoordinateItem[] = localStorageCoordinateList ? JSON.parse(localStorageCoordinateList) : [];
+      return {
+        code: 200,
+        value: parsedCoordinateList,
+        message: '회원목록 조회 성공',
+      };
+    },
+  },
+};
 
 const coordinateList: ICoordinateItem[] = [
   { id: 1, title: 'Puppy Cafe Seoul', coordinate: { lat: 36.2665, lng: 126.93 }, type: 'CAFE' },
@@ -54,4 +69,10 @@ const coordinateList: ICoordinateItem[] = [
   { id: 51, title: '케뷔와', coordinate: { lat: 37.28214, lng: 127.0644 }, type: 'CAFE' },
 ];
 
-export { coordinateList };
+const initializeCoordinateDatabase = () => {
+  const coordinateLocalStorageList = localStorage.getItem(databaseKey.coordinateList);
+  if (coordinateLocalStorageList && coordinateLocalStorageList?.length !== 0) return;
+  localStorage.setItem(databaseKey.coordinateList, JSON.stringify(coordinateList));
+};
+
+export { coordinateDatabase, coordinateList, initializeCoordinateDatabase };

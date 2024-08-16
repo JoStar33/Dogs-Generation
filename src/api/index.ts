@@ -46,14 +46,14 @@ instance.interceptors.response.use(
     if (shouldMissingToken) {
       const accessToken = storage.getAccessTokenLocalStorageItem();
       if (accessToken) {
-        instance.defaults.headers.common['Authorization'] = `${accessToken}`;
+        instance.defaults.headers.common['Authorization'] = accessToken;
         const freshRequest = {
           ...config,
           headers: { ...config.headers, Authorization: accessToken },
         };
         return instance.request(freshRequest);
       }
-      window.location.href = routerPath.SIGN_IN
+      window.location.href = routerPath.SIGN_IN;
       return;
     }
     return Promise.reject(error);
