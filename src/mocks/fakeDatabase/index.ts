@@ -1,6 +1,6 @@
-import { initializeContentsDatabase } from './resources/contents';
-import { initializeCoordinateDatabase } from './resources/coordinate';
-import { initializeMarketDatabase } from './resources/market';
+import { initializeContentsDatabase } from '@/mocks/fakeDatabase/resources/contents';
+import { initializeCoordinateDatabase } from '@/mocks/fakeDatabase/resources/coordinate';
+import { initializeMarketDatabase } from '@/mocks/fakeDatabase/resources/market';
 
 const databaseInitializer = () => {
   initializeMarketDatabase();

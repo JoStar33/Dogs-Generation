@@ -3,9 +3,9 @@
 import { ICoordinateListResponse } from '@/types/coordinate';
 import { delay, http } from 'msw';
 import { commonUrl } from '.';
-import { coordinateDatabase } from './fakeDatabase/resources/coordinate';
-import { marketDatabase } from './fakeDatabase/resources/market';
-import CustomResponse from './utils/customResponse';
+import { coordinateDatabase } from '@/mocks/fakeDatabase/resources/coordinate';
+import { marketDatabase } from '@/mocks/fakeDatabase/resources/market';
+import CustomResponse from '@/mocks/utils/customResponse';
 
 //coordinate
 const coordinateUrl = (path?: string) => `${commonUrl(`/coordinate${path ?? ''}`)}`;
@@ -27,7 +27,6 @@ const coordinateHandler = [
     });
   }),
   http.get(`${coordinateUrl('/*')}`, async ({ request }) => {
-    await delay(2000);
     const marketList = marketDatabase.Get.list().value;
     const urlObj = new URL(request.url);
     const pathSegments = urlObj.pathname.split('/');

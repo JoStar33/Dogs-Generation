@@ -1,5 +1,5 @@
 import { IMarketListElement } from '@/types/market';
-import databaseKey from '../../constants/databaseKey';
+import databaseKey from '@/mocks/fakeDatabase/constants/databaseKey';
 
 const marketDatabase = {
   Get: {

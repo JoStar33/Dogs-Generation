@@ -1,7 +1,7 @@
 import { http } from 'msw';
-import userDatabase from '../fakeDatabase/resources/user';
-import CustomResponse from '../utils/customResponse';
-import { commonUrl } from '..';
+import userDatabase from '@/mocks/fakeDatabase/resources/user';
+import CustomResponse from '@/mocks/utils/customResponse';
+import { commonUrl } from '@/mocks';
 import { crypto } from '@/utils/crypto';
 
 const authUrl = (path?: string) => `${commonUrl(`/auth${path ?? ''}`)}`;

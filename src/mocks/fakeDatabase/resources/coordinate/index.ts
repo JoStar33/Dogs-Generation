@@ -1,5 +1,5 @@
 import { ICoordinateItem } from '@/types/coordinate';
-import databaseKey from '../../constants/databaseKey';
+import databaseKey from '@/mocks/fakeDatabase/constants/databaseKey';
 
 const coordinateDatabase = {
   Get: {

@@ -1,4 +1,4 @@
-import marketGetHandler from './marketGetHandler';
+import marketGetHandler from '@/mocks/market/marketGetHandler';
 
 const marketHandler = [...marketGetHandler];
 

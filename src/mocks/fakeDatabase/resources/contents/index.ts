@@ -1,5 +1,5 @@
 import { IContentsListElement } from '@/types/contents';
-import databaseKey from '../../constants/databaseKey';
+import databaseKey from '@/mocks/fakeDatabase/constants/databaseKey';
 
 const contentsDatabase = {
   Get: {

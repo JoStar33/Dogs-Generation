@@ -1,4 +1,4 @@
-import { ICommonResponseReturn } from '../fakeDatabase/types';
+import { ICommonResponseReturn } from '@/mocks/fakeDatabase/types';
 
 const CustomResponse = ({ code, message, value }: ICommonResponseReturn) =>
   new Response(

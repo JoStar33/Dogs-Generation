@@ -1,8 +1,8 @@
 import { ISignInRequest, ISignUpRequest } from '@/types/auth';
-import userDatabase from '../fakeDatabase/resources/user';
+import userDatabase from '@/mocks/fakeDatabase/resources/user';
 import { delay, http } from 'msw';
-import { commonUrl } from '..';
-import CustomResponse from '../utils/customResponse';
+import { commonUrl } from '@/mocks';
+import CustomResponse from '@/mocks/utils/customResponse';
 import { crypto } from '@/utils/crypto';
 const authUrl = (path?: string) => `${commonUrl(`/auth${path}`)}`;
 

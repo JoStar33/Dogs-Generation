@@ -1,7 +1,7 @@
 import { http } from 'msw';
-import { commonUrl } from '..';
-import CustomResponse from '../utils/customResponse';
-import { marketDatabase } from '../fakeDatabase/resources/market';
+import { commonUrl } from '@/mocks';
+import CustomResponse from '@/mocks/utils/customResponse';
+import { marketDatabase } from '@/mocks/fakeDatabase/resources/market';
 
 const marketUrl = (path?: string) => `${commonUrl(`/market${path ?? ''}`)}`;
 

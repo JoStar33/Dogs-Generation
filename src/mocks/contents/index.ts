@@ -1,4 +1,4 @@
-import contentsGetHandler from './contentsGetHandler';
+import contentsGetHandler from '@/mocks/contents/contentsGetHandler';
 
 const contentsHandler = [...contentsGetHandler];
 

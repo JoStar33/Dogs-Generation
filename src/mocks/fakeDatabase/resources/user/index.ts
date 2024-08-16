@@ -1,6 +1,6 @@
 import { ISignUpRequest } from '@/types/auth';
-import { IDatabaseUser } from '../../types/auth';
-import databaseKey from '../../constants/databaseKey';
+import { IDatabaseUser } from '@/mocks/fakeDatabase/types/auth';
+import databaseKey from '@/mocks/fakeDatabase/constants/databaseKey';
 
 const userDatabase = {
   Get: {
