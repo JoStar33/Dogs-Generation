@@ -15,6 +15,12 @@ const coordinateDatabase = {
   },
 };
 
+const initializeCoordinateDatabase = () => {
+  const coordinateLocalStorageList = localStorage.getItem(databaseKey.coordinateList);
+  if (coordinateLocalStorageList && coordinateLocalStorageList?.length !== 0) return;
+  localStorage.setItem(databaseKey.coordinateList, JSON.stringify(coordinateList));
+};
+
 const coordinateList: ICoordinateItem[] = [
   { id: 1, title: 'Puppy Cafe Seoul', coordinate: { lat: 36.2665, lng: 126.93 }, type: 'CAFE' },
   { id: 2, title: 'Dog-Friendly Diner', coordinate: { lat: 35.1796, lng: 129.0756 }, type: 'RESTAURANT' },
@@ -68,11 +74,5 @@ const coordinateList: ICoordinateItem[] = [
   { id: 50, title: 'Pup Cafe', coordinate: { lat: 37.4533, lng: 126.7042 }, type: 'CAFE' },
   { id: 51, title: '케뷔와', coordinate: { lat: 37.28214, lng: 127.0644 }, type: 'CAFE' },
 ];
-
-const initializeCoordinateDatabase = () => {
-  const coordinateLocalStorageList = localStorage.getItem(databaseKey.coordinateList);
-  if (coordinateLocalStorageList && coordinateLocalStorageList?.length !== 0) return;
-  localStorage.setItem(databaseKey.coordinateList, JSON.stringify(coordinateList));
-};
 
 export { coordinateDatabase, coordinateList, initializeCoordinateDatabase };

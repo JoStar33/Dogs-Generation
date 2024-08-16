@@ -15,6 +15,12 @@ const marketDatabase = {
   },
 };
 
+const initializeMarketDatabase = () => {
+  const marketLocalStorageList = localStorage.getItem(databaseKey.marketList);
+  if (marketLocalStorageList && marketLocalStorageList?.length !== 0) return;
+  localStorage.setItem(databaseKey.marketList, JSON.stringify(marketList));
+};
+
 const marketList: IMarketListElement[] = [
   {
     id: 1,
@@ -524,11 +530,5 @@ const marketList: IMarketListElement[] = [
     phoneNumber: '010-4567-8901',
   },
 ];
-
-const initializeMarketDatabase = () => {
-  const marketLocalStorageList = localStorage.getItem(databaseKey.marketList);
-  if (marketLocalStorageList && marketLocalStorageList?.length !== 0) return;
-  localStorage.setItem(databaseKey.marketList, JSON.stringify(marketList));
-};
 
 export { marketDatabase, marketList, initializeMarketDatabase };

@@ -1,3 +1,5 @@
+import { DefaultResponse } from '.';
+
 /*************************** Domain & DTO ***************************/
 export interface IContentsListElement {
   id: number;
@@ -13,3 +15,6 @@ export interface IContentsListElement {
 /***************************** Request *****************************/
 
 /***************************** Response *****************************/
+export interface IContentsListResponse extends DefaultResponse {
+  value: IContentsListElement[];
+}

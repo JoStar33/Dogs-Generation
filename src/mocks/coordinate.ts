@@ -14,17 +14,25 @@ const coordinateHandler = [
   http.get(`${coordinateUrl()}`, async () => {
     const coordinateList = coordinateDatabase.Get.list().value;
     await delay(2000);
-    const coordinateListResponse: ICoordinateListResponse = {
-      value: coordinateList,
-      code: 200,
-      detail: 'success',
-      message: '성공',
-    };
-    return new Response(JSON.stringify(coordinateListResponse), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      const coordinateListResponse: ICoordinateListResponse = {
+        value: coordinateList,
+        code: 200,
+        detail: 'success',
+        message: '성공',
+      };
+      return new Response(JSON.stringify(coordinateListResponse), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error: any) {
+      console.log(error);
+      return CustomResponse({
+        code: 500,
+        message: error,
+      });
+    }
   }),
   http.get(`${coordinateUrl('/*')}`, async ({ request }) => {
     const marketList = marketDatabase.Get.list().value;

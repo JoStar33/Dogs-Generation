@@ -13,7 +13,7 @@ export default function Market({ data }: IProps) {
       <MarketSearchInput />
       <div className="market-card-wrapper">
         {data.value.map((element) => (
-          <MarketCard element={element} />
+          <MarketCard element={element} key={element.id} />
         ))}
       </div>
     </S.Market>

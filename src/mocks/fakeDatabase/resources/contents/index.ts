@@ -15,6 +15,12 @@ const contentsDatabase = {
   },
 };
 
+const initializeContentsDatabase = () => {
+  const contentsLocalStorageList = localStorage.getItem(databaseKey.contentsList);
+  if (contentsLocalStorageList && contentsLocalStorageList?.length !== 0) return;
+  localStorage.setItem(databaseKey.contentsList, JSON.stringify(contentsList));
+};
+
 const contentsList: IContentsListElement[] = [
   {
     id: 1,
@@ -177,11 +183,5 @@ const contentsList: IContentsListElement[] = [
     author: 'BeagleBark',
   },
 ];
-
-const initializeContentsDatabase = () => {
-  const contentsLocalStorageList = localStorage.getItem(databaseKey.contentsList);
-  if (contentsLocalStorageList && contentsLocalStorageList?.length !== 0) return;
-  localStorage.setItem(databaseKey.contentsList, JSON.stringify(contentsList));
-};
 
 export { contentsDatabase, contentsList, initializeContentsDatabase };
