@@ -45,6 +45,7 @@ export default function HomeContainer() {
     requestAPI: Coordinate.Get.list,
     options: {
       staleTime: TEN_MINUTES,
+      refetchOnReconnect: true,
     },
   };
 

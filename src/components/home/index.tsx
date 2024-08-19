@@ -8,10 +8,12 @@ interface IProps {
 
 const Home = React.forwardRef<HTMLDivElement, IProps>(({ handleMoveUserLocation }, ref) => {
   return (
-    <S.Home>
-      <div id="map" ref={ref} />
+    <>
+      <S.Home>
+        <div id="map" ref={ref} />
+      </S.Home>
       <FloatLocationButton handleMoveUserLocation={handleMoveUserLocation} />
-    </S.Home>
+    </>
   );
 });
 

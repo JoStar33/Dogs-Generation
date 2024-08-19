@@ -25,6 +25,7 @@ export default function MarketContainer() {
   };
 
   const { data, isLoading } = useSimpleQuery<IMarketListResponse>(request);
+
   if (!data || isLoading) return <></>;
 
   return <MarketComponent data={data} />;
