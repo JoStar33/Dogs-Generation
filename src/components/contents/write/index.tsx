@@ -15,11 +15,17 @@ export default function ContentsWrite({ onSubmit }: IProps) {
       <Form.FileDrop<IContentsRegisterForm> name="image" />
       <Form.InputA<IContentsRegisterForm> name="title" />
       <Form.TextArea<IContentsRegisterForm> name="description" />
-      <Button name="positive">등록</Button>
+      <Button type="submit" name="positive">
+        등록
+      </Button>
     </S.ContentsWrite>
   );
 }
 
 const S = {
-  ContentsWrite: styled.form``,
+  ContentsWrite: styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  `,
 };
