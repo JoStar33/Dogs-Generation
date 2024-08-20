@@ -101,9 +101,8 @@ const S = {
         background-color: ${(props) => props.theme.colors.white};
         height: ${(props) => (props.height ? props.height : '40px')};
         padding-left: 10px;
-        border-radius: 4px;
         color: ${(props) => props.theme.colors.modernBlack};
-        border: ${(props) => (props.readOnly ? 'none' : '1px solid #d0d0d0')};
+        border: ${(props) => (props.readOnly ? 'none' : `1px solid ${props.theme.colors.black}`)};
         ${(props) =>
           props.disabled &&
           css`

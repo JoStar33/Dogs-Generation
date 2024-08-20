@@ -14,7 +14,7 @@ export default function ContentsWrite({ onSubmit }: IProps) {
     <S.ContentsWrite onSubmit={handleSubmit(onSubmit)}>
       <Form.FileDrop<IContentsRegisterForm> name="image" />
       <Form.InputA<IContentsRegisterForm> name="title" />
-      <Form.InputA<IContentsRegisterForm> name="description" />
+      <Form.TextArea<IContentsRegisterForm> name="description" />
       <Button name="positive">등록</Button>
     </S.ContentsWrite>
   );
