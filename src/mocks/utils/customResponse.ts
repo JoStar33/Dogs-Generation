@@ -1,7 +1,8 @@
 import { ICommonResponseReturn } from '@/mocks/fakeDatabase/types';
+import { HttpResponse } from 'msw';
 
 const CustomResponse = ({ code, message, value }: ICommonResponseReturn) =>
-  new Response(
+  new HttpResponse(
     JSON.stringify({
       code,
       message,

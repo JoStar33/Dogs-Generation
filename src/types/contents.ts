@@ -11,6 +11,11 @@ export interface IContentsListElement {
 }
 
 /******************************* Form ********************************/
+export interface IContentsRegisterForm {
+  image: string[];
+  title: string;
+  description?: string;
+}
 
 /***************************** Request *****************************/
 

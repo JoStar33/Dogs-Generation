@@ -26,8 +26,16 @@ const recoverPassWordSchema = yup.object({
   email: validation.EMAIL,
 });
 
+//컨텐츠 등록
+const contentsRegisterSchema = yup.object({
+  title: validation.REQUIRED_TEXT_4({ maxLength: 20, minLength: 1 }),
+  description: validation.TEXT_2({ minLength: 0, maxLength: 200 }),
+  image: validation.IMAGE_FILE,
+});
+
 export const schema = {
   signInSchema,
   signUpSchema,
   recoverPassWordSchema,
+  contentsRegisterSchema,
 };

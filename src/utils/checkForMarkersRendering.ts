@@ -1,5 +1,3 @@
-// const OPTIMIZE_COORD_RANGE = 5;
-
 const showMarker = (map: naver.maps.Map, marker: naver.maps.Marker) => {
   marker.setMap(map);
 };
