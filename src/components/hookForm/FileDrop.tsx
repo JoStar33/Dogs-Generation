@@ -7,6 +7,7 @@ import { isFile } from '@/utils/isFile';
 import { flexCenter } from '@/styles/Common';
 import ErrorText from './ErrorText';
 import Lightbox from 'yet-another-react-lightbox';
+import Image from '@/components/common/Image';
 
 import 'yet-another-react-lightbox/styles.css';
 
@@ -153,7 +154,7 @@ export default function ImageDrop<T extends FieldValues>({ name, boxSize = 150, 
         <ul className="list">
           {previewFiles.map((item) => (
             <li className="list__item" key={item.name}>
-              <img
+              <Image
                 className="list__item--image"
                 src={name === 'logoImage' && !item.src ? '/images/empty.png' : item.src}
                 width={boxSize}

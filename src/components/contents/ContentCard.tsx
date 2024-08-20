@@ -1,6 +1,7 @@
 import { IContentsListElement } from '@/types/contents';
 import styled from 'styled-components';
-import Dimmed from '../common/Dimmed';
+import Dimmed from '@/components/common/Dimmed';
+import Image from '@/components/common/Image';
 
 interface IProps {
   element: IContentsListElement;
@@ -10,7 +11,7 @@ export default function ContentCard({ element }: IProps) {
   return (
     <S.ContentCard>
       <div className="content-card__image-wrapper">
-        <img src={element.image} alt="컨텐츠 이미지" />
+        <Image isFill src={element.image} alt="컨텐츠 이미지" />
         <Dimmed />
       </div>
       <div className="content-card__main-info">
@@ -37,10 +38,6 @@ const S = {
         min-width: 150px;
         height: 150px;
         border-radius: 10px;
-        img {
-          position: absolute;
-          object-fit: cover;
-        }
       }
       &__main-info {
         display: flex;

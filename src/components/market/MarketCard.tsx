@@ -1,15 +1,20 @@
 import { IMarketListElement } from '@/types/market';
 import styled from 'styled-components';
+import Image from '@/components/common/Image';
 
 interface IProps {
   element: IMarketListElement;
 }
 
 export default function MarketCard({ element }: IProps) {
+  const addDefaultImg = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    event.currentTarget.src = '/images/empty.png';
+  };
+
   return (
     <S.MarketCard>
       <div className="market-card__image-wrapper">
-        <img src={element.image} alt={element.title} />
+        <Image isFill onError={addDefaultImg} src={element.image} alt={element.title} />
       </div>
       <div className="market-card__info-wrapper">
         <p className="market-card__title">{element.title}</p>
