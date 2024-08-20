@@ -1,13 +1,11 @@
-import { atom } from 'recoil';
-import recoilKeys from '@/constants/recoilKeys';
+import { create } from 'zustand';
 
-interface ILoadingState {
+interface ILoadingStore {
   isLoading: boolean;
+  setIsLoading: (isShow: boolean) => void;
 }
 
-export const loadingState = atom<ILoadingState>({
-  key: recoilKeys.LOADING,
-  default: {
-    isLoading: false,
-  },
-});
+export const useLoadingStore = create<ILoadingStore>((set) => ({
+  isLoading: false,
+  setIsLoading: (isShow: boolean) => set((state) => ({ ...state, isLoading: isShow })),
+}));

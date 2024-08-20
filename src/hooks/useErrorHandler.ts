@@ -1,11 +1,10 @@
-import { modalState } from '@/stores/modal';
+import { useModalStore } from '@/stores/modal';
 import { DefaultResponse } from '@/types';
 import axios, { AxiosError } from 'axios';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 export function useErrorHandler() {
-  const setModalState = useSetRecoilState(modalState);
-  const resetModalState = useResetRecoilState(modalState);
+  const { resetModalState, setModalState } = useModalStore();
+
   const handleError = (error: any) => {
     if (axios.isAxiosError(error)) {
       return setModalState((prev) => ({
@@ -19,6 +18,7 @@ export function useErrorHandler() {
         },
       }));
     }
+
     const axiosError: AxiosError<DefaultResponse> = error;
     const isConnectionRefusedError = error.code?.includes('ERR_NETWORK');
     const isUnprocessableEntity = axiosError.response?.status === 422;

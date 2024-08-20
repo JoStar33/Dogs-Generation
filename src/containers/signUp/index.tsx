@@ -3,20 +3,18 @@ import SignUp from '@/components/signUp';
 import routerPath from '@/constants/routerPath';
 import { useErrorHandler } from '@/hooks/useErrorHandler';
 import useLoading from '@/hooks/useLoading';
-import { modalState } from '@/stores/modal';
+import { useModalStore } from '@/stores/modal';
 import { ISignUpForm } from '@/types/auth';
 import { schema } from '@/utils/validate/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 export default function SignUpContainer() {
   const { isLoading, setIsLoading } = useLoading();
   const { handleError } = useErrorHandler();
-  const setModalState = useSetRecoilState(modalState);
-  const resetModalState = useResetRecoilState(modalState);
+  const { resetModalState, setModalState } = useModalStore();
   const navigate = useNavigate();
   const methods = useForm<ISignUpForm>({
     defaultValues: {

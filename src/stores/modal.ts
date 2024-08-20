@@ -1,5 +1,4 @@
-import recoilKeys from '@/constants/recoilKeys';
-import { atom, selector } from 'recoil';
+import { create } from 'zustand';
 
 interface IModalState {
   type?: 'ALERT' | 'CONFIRM';
@@ -11,31 +10,26 @@ interface IModalState {
   onClickCancel: (...args: any) => void;
 }
 
-export const modalState = atom<IModalState>({
-  key: recoilKeys.MODAL,
-  default: {
-    type: undefined,
-    titleText: undefined,
-    descText: undefined,
-    confirmButtonText: '',
-    cancelButtonText: '',
-    onClickConfirm: () => {},
-    onClickCancel: () => {},
-  },
-});
+interface IModalStore {
+  modalState: IModalState;
+  setModalState: (fn: (prev: IModalState) => IModalState) => void;
+  resetModalState: () => void;
+}
 
-export const modalWithText = selector({
-  key: recoilKeys.MODAL_WITH_TEXT,
-  get: ({ get }) => {
-    const getModalState = get(modalState);
-    return {
-      type: getModalState.type,
-      titleText: getModalState.titleText,
-      descText: getModalState.descText,
-      confirmButtonText: getModalState.confirmButtonText,
-      cancelButtonText: getModalState.cancelButtonText,
-      onClickConfirm: getModalState.onClickConfirm,
-      onClickCancel: getModalState.onClickCancel,
-    };
+const initModalState = {
+  type: undefined,
+  titleText: undefined,
+  descText: undefined,
+  confirmButtonText: '',
+  cancelButtonText: '',
+  onClickConfirm: () => {},
+  onClickCancel: () => {},
+};
+
+export const useModalStore = create<IModalStore>((set) => ({
+  modalState: initModalState,
+  setModalState: (fn: (prev: IModalState) => IModalState) => {
+    set((state) => ({ modalState: fn(state.modalState) }));
   },
-});
+  resetModalState: () => set((prev) => ({ ...prev, modalState: initModalState })),
+}));

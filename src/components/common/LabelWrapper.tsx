@@ -19,6 +19,7 @@ export default function LabelWrapper({ label, labelStyle, wrapperStyle, isHorizo
         flexDirection: 'column',
         gap: '10px',
       };
+
   return (
     <S.LabelWrapper style={mainStyle}>
       <p className="label-wrapper__label" style={labelStyle}>

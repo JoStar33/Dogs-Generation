@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
 import Portal from '@/components/common/Portal';
 import DarkBackground from '@/components/common/DarkBackground';
 import { textEllipsis } from '@/styles/Common';
-import { modalWithText } from '@/stores/modal';
+import { useModalStore } from '@/stores/modal';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 const modalVariants = {
@@ -27,8 +26,8 @@ const modalVariants = {
 };
 
 function Alert() {
-  const modalValue = useRecoilValue(modalWithText);
-  const computedDescTextArr = modalValue.descText ? modalValue.descText.split('\n') : '';
+  const { modalState } = useModalStore();
+  const computedDescTextArr = modalState.descText ? modalState.descText.split('\n') : '';
 
   return (
     <Portal>
@@ -38,13 +37,13 @@ function Alert() {
             <i className="info-icon">
               <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
-            <h3 className="title-text">{modalValue.titleText}</h3>
+            <h3 className="title-text">{modalState.titleText}</h3>
             <div className="desc-text-container">
               {computedDescTextArr ? computedDescTextArr.map((desc) => <p className="desc-text">{desc}</p>) : computedDescTextArr}
             </div>
           </div>
-          <button className="button-box__confirm" onClick={modalValue.onClickConfirm}>
-            {modalValue.confirmButtonText}
+          <button className="button-box__confirm" onClick={modalState.onClickConfirm}>
+            {modalState.confirmButtonText}
           </button>
         </S.Modal>
       </DarkBackground>
@@ -53,8 +52,8 @@ function Alert() {
 }
 
 function Confirm() {
-  const modalValue = useRecoilValue(modalWithText);
-  const computedDescTextArr = modalValue.descText ? modalValue.descText.split('\n') : '';
+  const { modalState } = useModalStore();
+  const computedDescTextArr = modalState.descText ? modalState.descText.split('\n') : '';
 
   return (
     <Portal>
@@ -64,17 +63,17 @@ function Confirm() {
             <i className="info-icon">
               <IoMdInformationCircleOutline size={30} fill="#57a8eb" />
             </i>
-            <h3 className="title-text">{modalValue.titleText}</h3>
+            <h3 className="title-text">{modalState.titleText}</h3>
             <div className="desc-text-container">
               {computedDescTextArr ? computedDescTextArr?.map((desc) => <p className="desc-text">{desc}</p>) : computedDescTextArr}
             </div>
           </div>
           <div className="button-box">
-            <button className="button-box__cancel" onClick={modalValue.onClickCancel}>
-              {modalValue.cancelButtonText}
+            <button className="button-box__cancel" onClick={modalState.onClickCancel}>
+              {modalState.cancelButtonText}
             </button>
-            <button className="button-box__confirm" onClick={modalValue.onClickConfirm}>
-              {modalValue.confirmButtonText}
+            <button className="button-box__confirm" onClick={modalState.onClickConfirm}>
+              {modalState.confirmButtonText}
             </button>
           </div>
         </S.Modal>
