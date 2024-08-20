@@ -1,13 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
 import routerPath from '@/constants/routerPath';
 import HomePage from '@/pages';
-import SignInPage from '@/pages/SignInPage';
+import SignInPage from '@/pages/signIn';
 import { PublicRoute } from '@/components/routes/PublicRoute';
 import { PrivateRoute } from '@/components/routes/PrivateRoute';
-import UserPage from '@/pages/UserPage';
-import SignUpPage from '@/pages/SignUpPage';
-import MarketPage from '@/pages/MarketPage';
-import ContentsPage from '@/pages/ContentsPage';
+import UserPage from '@/pages/user';
+import SignUpPage from '@/pages/signUp';
+import MarketPage from '@/pages/market';
+import ContentsWritePage from '@/pages/contents/write';
+import ContentsPage from '@/pages/contents';
 
 export default function Router() {
   return (
@@ -21,6 +22,7 @@ export default function Router() {
       </Route>
       <Route element={<PrivateRoute />}>
         <Route path={routerPath.USER} element={<UserPage />} />
+        <Route path={routerPath.CONTENTS_WRITE} element={<ContentsWritePage />} />
       </Route>
     </Routes>
   );

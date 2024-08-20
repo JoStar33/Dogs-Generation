@@ -16,6 +16,7 @@ const S = {
     width: 50px;
     height: 50px;
     position: fixed;
+    cursor: pointer;
     z-index: 50;
     right: 50px;
     bottom: 120px;
