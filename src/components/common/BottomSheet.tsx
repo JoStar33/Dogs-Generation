@@ -38,7 +38,7 @@ const S = {
     left: 50%;
     border-radius: 20px 20px 0 0;
     width: 100%;
-    bottom: 0px;
+    bottom: 80px;
     overflow: hidden;
     background-color: ${(props) => props.theme.colors.white};
     padding: 0 10px;
