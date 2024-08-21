@@ -15,4 +15,5 @@ const CustomResponse = ({ code, message, value }: ICommonResponseReturn) =>
       },
     },
   );
+
 export default CustomResponse;

@@ -6,22 +6,19 @@ import Portal from '@/components/common/Portal';
 import Modal from '@/components/common/Modal';
 import { AnimatePresence } from 'framer-motion';
 import Router from '@/Router';
-import { useLoadingStore } from './stores/loading';
-import Loading from './components/common/Loading';
-import DarkBackground from './components/common/DarkBackground';
+import { useLoadingStore } from '@/stores/loading';
+import Loading from '@/components/common/Loading';
+import DarkBackground from '@/components/common/DarkBackground';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import queryClientDefaultOptions from './constants/queryClientDefaultOptions';
-import databaseInitializer from './mocks/fakeDatabase';
-import React from 'react';
+import queryClientDefaultOptions from '@/constants/queryClientDefaultOptions';
+import useMSWSetter from '@/hooks/useMSWSetter';
 
 export default function App() {
   const { isLoading } = useLoadingStore();
   const { modalState } = useModalStore();
-  const queryClient = new QueryClient(queryClientDefaultOptions);
+  useMSWSetter();
 
-  React.useEffect(() => {
-    databaseInitializer();
-  }, []);
+  const queryClient = new QueryClient(queryClientDefaultOptions);
 
   return (
     <QueryClientProvider client={queryClient}>

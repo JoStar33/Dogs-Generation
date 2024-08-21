@@ -3,6 +3,7 @@ import { DefaultResponse } from '@/types';
 import environment from '@/environment';
 import { storage } from '@/utils/storage';
 import routerPath from '@/constants/routerPath';
+import { useModalStore } from '@/stores/modal';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const VERSION = '/v1';
@@ -13,6 +14,7 @@ const config: AxiosRequestConfig = {
   withCredentials: false,
 };
 
+const { setModalState, resetModalState } = useModalStore.getState();
 const responseBody = <T extends Object = DefaultResponse>(response: AxiosResponse<T>) => response.data;
 
 export const instance = axios.create(config);
@@ -36,24 +38,65 @@ instance.interceptors.request.use(
   },
 );
 
+let checkDidItWorkGetAccessToken = false;
+
 instance.interceptors.response.use(
   (config) => {
+    checkDidItWorkGetAccessToken = false;
     return config;
   },
   async (error) => {
     const { config, response } = error;
+    const inappropriateToken = response?.status === 400;
     const shouldMissingToken = response?.status === 403;
-    if (shouldMissingToken) {
+    if (shouldMissingToken && !checkDidItWorkGetAccessToken) {
       const accessToken = storage.getAccessTokenLocalStorageItem();
       if (accessToken) {
         instance.defaults.headers.common['Authorization'] = accessToken;
         const freshRequest = {
           ...config,
-          headers: { ...config.headers, Authorization: accessToken },
+          headers: { 
+            ...config.headers, 
+            Authorization: accessToken 
+          },
         };
+        checkDidItWorkGetAccessToken = true;
         return instance.request(freshRequest);
       }
-      window.location.href = routerPath.SIGN_IN;
+      window.location.href = routerPath.HOME;
+      return;
+    }
+    if (shouldMissingToken && checkDidItWorkGetAccessToken) {
+      checkDidItWorkGetAccessToken = false;
+      setModalState((prev) => (
+        { 
+          ...prev, 
+          type: 'ALERT', 
+          titleText: '부적절한 접근입니다.', 
+          confirmButtonText: '확인', 
+          onClickConfirm: () => {
+            storage.removeAccessToken();
+            window.location.href = routerPath.HOME;
+            resetModalState();
+          },
+        }
+      ));
+      return;
+    }
+    if (inappropriateToken) {
+      setModalState((prev) => (
+        { 
+          ...prev, 
+          type: 'ALERT', 
+          titleText: '부적절한 접근입니다.', 
+          confirmButtonText: '확인', 
+          onClickConfirm: () => {
+            storage.removeAccessToken();
+            window.location.href = routerPath.HOME;
+            resetModalState();
+          },
+        }
+      ));
       return;
     }
     return Promise.reject(error);
