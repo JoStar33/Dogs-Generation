@@ -12,6 +12,7 @@ interface Props<T extends FieldValues> {
 
 export default function RadioButton<T extends FieldValues>({ name, value, style, inputStyle, disabled, children }: Props<T>) {
   const { register } = useFormContext<T>();
+
   return (
     <S.RadioButton htmlFor={`radio-${name}-${value}`} style={style}>
       <input style={inputStyle} value={value} id={`radio-${name}-${value}`} type="radio" disabled={disabled} {...register(name)} />

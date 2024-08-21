@@ -8,7 +8,8 @@ interface IProps {
 }
 
 export default function BottomSheetShopInfo({ data }: IProps) {
-  if (!data) return <></>;
+  if (!data) return <S.BottomSheetShopInfo />;
+
   return (
     <S.BottomSheetShopInfo>
       <Image src={data.value.image} alt="좌표상 이미지 정보" width={100} height={100} />
