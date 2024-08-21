@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 export default function SignInContainer() {
   const { handleError } = useErrorHandler();
@@ -49,14 +48,8 @@ export default function SignInContainer() {
   );
 
   return (
-    <S.SignInContainer>
-      <FormProvider {...methods}>
-        <SignIn onSubmit={onSubmit} />
-      </FormProvider>
-    </S.SignInContainer>
+    <FormProvider {...methods}>
+      <SignIn onSubmit={onSubmit} />
+    </FormProvider>
   );
 }
-
-const S = {
-  SignInContainer: styled.div``,
-};

@@ -1,4 +1,6 @@
 import Auth from '@/api/auth';
+import Loading from '@/components/common/Loading';
+import { ErrorComponent } from '@/components/error/ErrorComponent';
 import User from '@/components/user';
 import queryKeys from '@/constants/queryKeys';
 import routerPath from '@/constants/routerPath';
@@ -16,14 +18,16 @@ export default function UserContainer() {
     options: {},
   };
 
-  const { data } = useSimpleQuery<IUserDetailResponse>(request);
+  const { data, isLoading } = useSimpleQuery<IUserDetailResponse>(request);
 
   const handleSignOut = () => {
     storage.removeAccessToken();
     navigate(routerPath.HOME);
   };
 
-  if (!data) return <></>;
+  if (isLoading) return <Loading mode="block" />;
+
+  if (!data) return <ErrorComponent.Text />;
 
   return <User data={data} handleSignOut={handleSignOut} />;
 }

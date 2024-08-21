@@ -1,3 +1,4 @@
+import { useModalStore } from '@/stores/modal';
 import React from 'react';
 
 interface ILocationType {
@@ -7,6 +8,7 @@ interface ILocationType {
 }
 
 export default function useGeolocation() {
+  const { setModalState, resetModalState } = useModalStore();
   const [location, setLocation] = React.useState<ILocationType>({
     loaded: false,
     coordinates: { lat: INIT_COORDINATE.LAT, lng: INIT_COORDINATE.LNG },
@@ -35,10 +37,20 @@ export default function useGeolocation() {
         code: 0,
         message: '해당 브라우저는 GPS 기능을 지원하지 않습니다!',
       });
+      setModalState((prev) => ({
+        ...prev,
+        type: 'ALERT',
+        titleText: '해당 브라우저는 GPS 기능을 지원하지 않습니다!',
+        confirmButtonText: '확인',
+        onClickConfirm: () => {
+          resetModalState();
+        },
+      }));
     }
 
     const watch = navigator.geolocation.watchPosition(onSuccess, onError, watchOptions);
     return () => navigator.geolocation.clearWatch(watch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return location;

@@ -1,5 +1,7 @@
 import Contents from '@/api/contents';
+import Loading from '@/components/common/Loading';
 import ContentsComponent from '@/components/contents';
+import { ErrorComponent } from '@/components/error/ErrorComponent';
 import queryKeys from '@/constants/queryKeys';
 import useSimpleQuery, { IUseSimpleQuery } from '@/hooks/useSimpleQuery';
 import { IContentsListResponse } from '@/types/contents';
@@ -17,7 +19,9 @@ export default function ContentsContainer() {
 
   const { data, isLoading } = useSimpleQuery<IContentsListResponse>(request);
 
-  if (!data || isLoading) return <></>;
+  if (isLoading) return <Loading mode="block" />;
+
+  if (!data) return <ErrorComponent.Text />;
 
   return <ContentsComponent data={data} />;
 }

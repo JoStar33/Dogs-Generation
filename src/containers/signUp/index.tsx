@@ -9,7 +9,6 @@ import { schema } from '@/utils/validate/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 export default function SignUpContainer() {
   const { isLoading, setIsLoading } = useLoading();
@@ -61,14 +60,8 @@ export default function SignUpContainer() {
   };
 
   return (
-    <S.SignUpContainer>
-      <FormProvider {...methods}>
-        <SignUp onSubmit={onSubmit} />
-      </FormProvider>
-    </S.SignUpContainer>
+    <FormProvider {...methods}>
+      <SignUp onSubmit={onSubmit} />
+    </FormProvider>
   );
 }
-
-const S = {
-  SignUpContainer: styled.div``,
-};

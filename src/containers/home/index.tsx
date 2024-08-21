@@ -92,8 +92,7 @@ export default function HomeContainer() {
 
   React.useEffect(
     function initializeMap() {
-      if (!mapElement.current || !naver || isErrorLoadLocation) return;
-      if (initSuccessCheckerRef.current) return;
+      if (!mapElement.current || !naver || isErrorLoadLocation || initSuccessCheckerRef.current) return;
       const location = new naver.maps.LatLng(permissionExistenceCoordinate().lat, permissionExistenceCoordinate().lng);
       naverMapRef.current = new naver.maps.Map(mapElement.current, mapOptions(location));
 
