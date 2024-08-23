@@ -96,30 +96,49 @@ export default function HomeContainer() {
     }, STOP_ANIMATION_TIME);
   };
 
+  //사용자 마커 렌더링
   React.useEffect(
-    function initializeMap() {
-      if (!mapElement.current || !naver || isErrorLoadLocation || initSuccessCheckerRef.current) return;
-
+    function initializeUserMarker() {
+      if (!mapElement.current || !naverMapRef.current || isDeniedPermission || isErrorLoadLocation) return;
       const location = new naver.maps.LatLng(permissionExistenceCoordinate().lat, permissionExistenceCoordinate().lng);
-      naverMapRef.current = new naver.maps.Map(mapElement.current, mapOptions(location));
-
-      if (isDeniedPermission) return;
       // 내 좌표설정
       userMarkerRef.current = new naver.maps.Marker({
         position: location,
         map: naverMapRef.current,
       });
-
-      initSuccessCheckerRef.current = true;
       return () => {
         if (!userMarkerRef.current) return;
         userMarkerRef.current.setMap(null);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [userLocation],
+    [userLocation, naverMapRef.current],
   );
 
+  //최초 페이지 로드시에 현재위치로 이동되도록 하는 훅
+  React.useEffect(
+    function moveOnceCurrentLocation() {
+      if (initSuccessCheckerRef.current) return;
+      if (!mapElement.current || !naverMapRef.current || isDeniedPermission || isErrorLoadLocation) return;
+      if (!mapElement.current || !naver || initSuccessCheckerRef.current) return;
+      naverMapRef.current.setCenter(permissionExistenceCoordinate());
+      initSuccessCheckerRef.current = true;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [mapElement.current, userLocation],
+  );
+
+  //지도 렌더링
+  React.useEffect(function initializeMap() {
+    if (!mapElement.current || !naver) return;
+
+    const location = new naver.maps.LatLng(permissionExistenceCoordinate().lat, permissionExistenceCoordinate().lng);
+    //지도 설정
+    naverMapRef.current = new naver.maps.Map(mapElement.current, mapOptions(location));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //각 마커들 렌더링
   React.useEffect(
     function initializeMarker() {
       if (!mapElement.current || !naverMapRef.current || !naver || !data || marketMarkers.length !== 0 || isErrorLoadLocation) return;
@@ -169,6 +188,7 @@ export default function HomeContainer() {
     [data, naverMapRef.current],
   );
 
+  //메모리 클린업
   React.useEffect(function cleanUpMemory() {
     return () => {
       naverMapRef.current?.destroy();
@@ -180,6 +200,7 @@ export default function HomeContainer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //화면에 보이면 마커렌더링 & 화면에 안보이면 마커가림
   React.useEffect(
     function initializeVirtualizeMarkerEvent() {
       if (!naverMapRef.current || !naver || marketMarkers.length === 0) return;
