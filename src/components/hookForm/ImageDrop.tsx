@@ -8,6 +8,7 @@ import { flexCenter } from '@/styles/Common';
 import ErrorText from './ErrorText';
 import Lightbox from 'yet-another-react-lightbox';
 import Image from '@/components/common/Image';
+import { FaPlus } from 'react-icons/fa';
 
 import 'yet-another-react-lightbox/styles.css';
 
@@ -34,14 +35,14 @@ export default function ImageDrop<T extends FieldValues>({ name, boxSize = 150, 
   } = useFormContext<T>();
   const [previewFiles, setPreviewFiles] = React.useState<TPreviewFiles[] | []>([]);
   const inputFileRef = React.useRef<HTMLLabelElement>(null);
-  const [isDragActive, setIsDragActive] = React.useState(false);
+  // const [isDragActive, setIsDragActive] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
   const files: File[] = watch(name);
 
-  const handleDragStart = () => setIsDragActive(true);
+  // const handleDragStart = () => setIsDragActive(true);
 
-  const handleDragEnd = () => setIsDragActive(false);
+  // const handleDragEnd = () => setIsDragActive(false);
 
   const handleDragOver: React.DragEventHandler<HTMLLabelElement> = (event) => {
     event.preventDefault();
@@ -74,6 +75,7 @@ export default function ImageDrop<T extends FieldValues>({ name, boxSize = 150, 
       const file = acceptedFiles[0];
 
       if (file.size > 2000000) return alert('2MB이하의 파일만 업로드가능합니다.');
+      console.log(file.stream);
       if (!acceptedSize) return setValue(name, [file] as PathValue<T, Path<T>>);
 
       const [acceptedWidth, acceptedHeight] = acceptedSize.split('x');
@@ -136,14 +138,16 @@ export default function ImageDrop<T extends FieldValues>({ name, boxSize = 150, 
             htmlFor={name}
             boxSize={boxSize}
             ref={inputFileRef}
-            onDragEnter={handleDragStart}
+            // onDragEnter={handleDragStart}
             onDragOver={handleDragOver} // dragover 핸들러 추가
-            onDragLeave={handleDragEnd}
+            // onDragLeave={handleDragEnd}
             onChange={handleUploadImages as unknown as React.FormEventHandler<HTMLLabelElement>}
             onDrop={handleDrop}
           >
             <input id={name} type="file" accept="image/*" {...register(name)} />
-            {isDragActive ? <motion.div animate={{ scale: 1.1 }} className="drop-in"></motion.div> : <div className="drop-in"></div>}
+            <motion.div whileHover={{ scale: 1.3 }} className="drop-in">
+              <FaPlus size={25} />
+            </motion.div>
           </StyledImageArea>
           <p>{guidText}</p>
           {errors[name] && <ErrorText errors={errors} name={name} margin="0 0 5px 0" />}
@@ -188,10 +192,6 @@ const StyledImageArea = styled.label<{ boxSize: number }>`
   ${flexCenter}
   :hover {
     transform: scale(1.01);
-  }
-  .drop-in {
-    padding: 15px;
-    height: 100%;
   }
   input {
     display: none;

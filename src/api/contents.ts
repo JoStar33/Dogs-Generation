@@ -5,7 +5,9 @@ const Contents = {
   Get: {
     list: () => requests.get<contents.IContentsListResponse>('/contents'),
   },
-  Post: {},
+  Post: {
+    write: (body: contents.IContentsRegisterRequest) => requests.post('/contents', body),
+  },
   Put: {},
   Patch: {},
   Delete: {},

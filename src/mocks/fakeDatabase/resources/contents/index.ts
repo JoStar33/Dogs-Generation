@@ -1,5 +1,6 @@
-import { IContentsListElement } from '@/types/contents';
+import { IContentsListElement, IContentsRegisterRequest } from '@/types/contents';
 import databaseKey from '@/mocks/fakeDatabase/constants/databaseKey';
+import { dateFormat } from '@/utils/dateFormat';
 
 const contentsDatabase = {
   Get: {
@@ -11,6 +12,19 @@ const contentsDatabase = {
         value: parsedContentsList,
         message: '회원목록 조회 성공',
       };
+    },
+  },
+  Create: {
+    write: (request: IContentsRegisterRequest, author: string) => {
+      const localStorageContentsList = localStorage.getItem(databaseKey.contentsList) ?? '';
+      const parsedContentsList: IContentsListElement[] = localStorageContentsList ? JSON.parse(localStorageContentsList) : [];
+      const newContents: IContentsListElement = {
+        id: parsedContentsList.length + 1,
+        ...request,
+        author,
+        createdAt: dateFormat.date5(String(new Date())),
+      };
+      localStorage.setItem(databaseKey.contentsList, JSON.stringify([...parsedContentsList, newContents]));
     },
   },
 };

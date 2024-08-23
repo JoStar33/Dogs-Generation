@@ -12,9 +12,10 @@ export default function ContentsWrite({ onSubmit }: IProps) {
   const { handleSubmit } = useFormContext<IContentsRegisterForm>();
   return (
     <S.ContentsWrite onSubmit={handleSubmit(onSubmit)}>
-      <Form.FileDrop<IContentsRegisterForm> name="image" />
-      <Form.InputA<IContentsRegisterForm> name="title" />
-      <Form.TextArea<IContentsRegisterForm> name="description" />
+      <h1 className="contents-write__header">컨텐츠 작성</h1>
+      <Form.ImageDrop<IContentsRegisterForm> name="image" />
+      <Form.InputA<IContentsRegisterForm> name="title" label="제목" />
+      <Form.TextArea<IContentsRegisterForm> name="description" label="내용" />
       <Button type="submit" name="positive">
         등록
       </Button>
@@ -27,5 +28,13 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    .contents-write {
+      &__header {
+        text-align: center;
+        font-size: 19px;
+        font-weight: 500;
+        margin: 10px 0;
+      }
+    }
   `,
 };

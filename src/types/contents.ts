@@ -6,7 +6,7 @@ export interface IContentsListElement {
   image: string;
   title: string;
   createdAt: string;
-  description: string;
+  description?: string;
   author: string;
 }
 
@@ -18,6 +18,11 @@ export interface IContentsRegisterForm {
 }
 
 /***************************** Request *****************************/
+export interface IContentsRegisterRequest {
+  image: string;
+  title: string;
+  description?: string;
+}
 
 /***************************** Response *****************************/
 export interface IContentsListResponse extends DefaultResponse {
