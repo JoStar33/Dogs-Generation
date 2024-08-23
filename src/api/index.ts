@@ -23,10 +23,9 @@ instance.interceptors.request.use(
   (config) => {
     try {
       const accessToken = storage.getAccessTokenLocalStorageItem();
-      if (accessToken) {
-        if (!instance.defaults.headers.common.Authorization) {
-          instance.defaults.headers.common['Authorization'] = accessToken;
-        }
+      if (!accessToken) return config;
+      if (!instance.defaults.headers.common.Authorization) {
+        instance.defaults.headers.common['Authorization'] = accessToken;
       }
     } catch (error) {
       console.log(error);
@@ -51,20 +50,20 @@ instance.interceptors.response.use(
     const shouldMissingToken = response?.status === 403;
     if (shouldMissingToken && !checkDidItWorkGetAccessToken) {
       const accessToken = storage.getAccessTokenLocalStorageItem();
-      if (accessToken) {
-        instance.defaults.headers.common['Authorization'] = accessToken;
-        const freshRequest = {
-          ...config,
-          headers: { 
-            ...config.headers, 
-            Authorization: accessToken 
-          },
-        };
-        checkDidItWorkGetAccessToken = true;
-        return instance.request(freshRequest);
+      if (!accessToken) {
+        window.location.href = routerPath.HOME;
+        return;
       }
-      window.location.href = routerPath.HOME;
-      return;
+      instance.defaults.headers.common['Authorization'] = accessToken;
+      const freshRequest = {
+        ...config,
+        headers: { 
+          ...config.headers, 
+          Authorization: accessToken 
+        },
+      };
+      checkDidItWorkGetAccessToken = true;
+      return instance.request(freshRequest);
     }
     if (shouldMissingToken && checkDidItWorkGetAccessToken) {
       checkDidItWorkGetAccessToken = false;

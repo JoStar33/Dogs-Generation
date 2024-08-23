@@ -111,7 +111,6 @@ const S = {
   `,
   Label: styled.label<{ required: boolean }>`
     display: inline-block;
-    font-weight: 500;
     height: 15px;
     width: auto;
     cursor: default;
@@ -119,7 +118,6 @@ const S = {
     font-size: 16px;
     color: ${(props) => props.theme.colors.modernBlack};
     margin-bottom: 7px;
-    font-family: 'SUIT';
     .styled-label__required {
       display: none;
       ${(props) =>

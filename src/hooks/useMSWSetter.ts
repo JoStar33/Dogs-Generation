@@ -12,6 +12,7 @@ export default function useMSWSetter() {
     }
   };
 
+  // MSW 연결이슈를 해결해주는 useEffect
   React.useEffect(() => {
     window.addEventListener('focus', focusConnect);
     return () => {
@@ -19,6 +20,7 @@ export default function useMSWSetter() {
     };
   }, []);
 
+  // 데이터베이스 초기연결 useEffect
   React.useEffect(() => {
     databaseInitializer();
   }, []);

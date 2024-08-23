@@ -26,6 +26,9 @@ const initModalState = {
   onClickCancel: () => {},
 };
 
+/**
+ * 모달 노출 및 모달에 노출될 정보설정을 해주는 스토어
+ */
 export const useModalStore = create<IModalStore>((set) => ({
   modalState: initModalState,
   setModalState: (fn: (prev: IModalState) => IModalState) => {

@@ -5,6 +5,9 @@ interface ILoadingStore {
   setIsLoading: (fn: ((prev: boolean) => boolean) | boolean) => void;
 }
 
+/**
+ * 로딩 노출을 관리하는 스토어
+ */
 export const useLoadingStore = create<ILoadingStore>((set) => ({
   isLoading: false,
   setIsLoading: (fn: ((prev: boolean) => boolean) | boolean) => {

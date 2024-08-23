@@ -32,13 +32,13 @@ export default function HomeContainer() {
   const naverMapRef = React.useRef<naver.maps.Map | null>(null);
   const userMarkerRef = React.useRef<naver.maps.Marker | null>(null);
   const currentEventListRef = React.useRef<naver.maps.MapEventListener[]>([]);
+  /**
+   * 성공적으로 지도를 만들었는지 확인
+   */
   const initSuccessCheckerRef = React.useRef(false);
   const [marketMarkers, setMarketMarkers] = React.useState<naver.maps.Marker[]>([]);
   const [bottomSheetState, setBottomSheetState] = React.useState<IBottomSheetState>(initBottomSheetState);
-  const userLocation = useGeolocation();
-
-  const isErrorLoadLocation = !userLocation.loaded && userLocation.coordinates;
-  const isDeniedPermission = userLocation.loaded && !userLocation.coordinates;
+  const { location: userLocation, isErrorLoadLocation, isDeniedPermission } = useGeolocation();
 
   const request: IUseSimpleQuery = {
     queryKey: [queryKeys.coordinateList],
@@ -77,6 +77,12 @@ export default function HomeContainer() {
     });
   };
 
+  /**
+   * 좌표 클릭이벤트
+   * @param element 좌표요소 정보
+   * @param marker 마커정보
+   * @description 클릭시 마커위치로 이동 및 마커 애니메이션 적용 및 지도확대
+   */
   const handleClickCoordinate = (element: ICoordinateItem, marker: naver.maps.Marker) => {
     marker.setAnimation(naver.maps.Animation.BOUNCE);
     naverMapRef.current?.setCenter(element.coordinate);
@@ -93,6 +99,7 @@ export default function HomeContainer() {
   React.useEffect(
     function initializeMap() {
       if (!mapElement.current || !naver || isErrorLoadLocation || initSuccessCheckerRef.current) return;
+
       const location = new naver.maps.LatLng(permissionExistenceCoordinate().lat, permissionExistenceCoordinate().lng);
       naverMapRef.current = new naver.maps.Map(mapElement.current, mapOptions(location));
 
@@ -115,8 +122,7 @@ export default function HomeContainer() {
 
   React.useEffect(
     function initializeMarker() {
-      if (!mapElement.current || !naver || isErrorLoadLocation || !data || !naverMapRef.current) return;
-      if (marketMarkers.length !== 0) return;
+      if (!mapElement.current || !naverMapRef.current || !naver || !data || marketMarkers.length !== 0 || isErrorLoadLocation) return;
       // 마커 렌더링
       const computedMarkers = data.value.map((element, index) => {
         const marker = new naver.maps.Marker({
@@ -144,14 +150,10 @@ export default function HomeContainer() {
       // 마커 클러스터링 진행
       const MarkerClustering = makeMarkerClustering(naver);
       new MarkerClustering({
-        minClusterSize: 2,
-        maxZoom: 13,
+        ...clusterDefaultOptions,
         map: naverMapRef.current,
         markers: [...computedMarkers, userMarkerRef.current],
-        disableClickZoom: false,
-        gridSize: 120,
         icons: [clusterMarker],
-        indexGenerator: [10, 20, 30, 61, 100],
         // stylingFunction: (clusterMarker: any, count: number) => {
         //   clusterMarker.getElement().querySelector('div:first-child').innerText = count;
         // },
@@ -180,8 +182,8 @@ export default function HomeContainer() {
 
   React.useEffect(
     function initializeVirtualizeMarkerEvent() {
-      if (!naverMapRef.current || !naver) return;
-      if (marketMarkers.length === 0) return;
+      if (!naverMapRef.current || !naver || marketMarkers.length === 0) return;
+
       const zoomChangeEvent = naver.maps.Event.addListener(naverMapRef.current, 'zoom_changed', () => handleZoomChangedMap());
       const dragEndEvent = naver.maps.Event.addListener(naverMapRef.current, 'dragend', handleDragEndMap);
 
@@ -213,3 +215,11 @@ const mapOptions = (location: naver.maps.LatLng) => ({
   mapDataControl: false,
   zoomControl: false,
 });
+
+const clusterDefaultOptions = {
+  minClusterSize: 2,
+  maxZoom: 13,
+  disableClickZoom: false,
+  gridSize: 120,
+  indexGenerator: [10, 20, 30, 61, 100],
+};

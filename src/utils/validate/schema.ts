@@ -1,13 +1,13 @@
 import * as yup from 'yup';
 import { validation } from '@/utils/validate/validation';
 
-//로그인
+/**로그인*/
 const signInSchema = yup.object({
   email: validation.EMAIL,
   password: validation.PASSWORD,
 });
 
-//회원가입
+/**회원가입*/
 const signUpSchema = yup.object({
   email: validation.EMAIL,
   password: validation.PASSWORD,
@@ -21,12 +21,12 @@ const signUpSchema = yup.object({
   addressDetail: validation.REQUIRED_TEXT_1({ maxLength: 999, minLength: 1 }),
 });
 
-//비밀번호 찾기
+/**비밀번호 찾기*/
 const recoverPassWordSchema = yup.object({
   email: validation.EMAIL,
 });
 
-//컨텐츠 등록
+/**컨텐츠 등록*/
 const contentsRegisterSchema = yup.object({
   title: validation.REQUIRED_TEXT_4({ maxLength: 20, minLength: 1 }),
   description: validation.TEXT_2({ minLength: 0, maxLength: 200 }),

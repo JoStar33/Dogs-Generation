@@ -7,6 +7,13 @@ interface ILocationType {
   error?: { code: number; message: string };
 }
 
+/**
+ *
+ * @returns {{ location: ILocationType, isErrorLoadLocation: boolean, isDeniedPermission: boolean, }}
+ * @description - location: 좌표와 관련된 정보
+ * - isErrorLoadLocation: 현재 내 좌표 로드 에러 유무
+ * - isDeniedPermission: 브라우저 권한을 얻지못했는지 판별
+ */
 export default function useGeolocation() {
   const { setModalState, resetModalState } = useModalStore();
   const [location, setLocation] = React.useState<ILocationType>({
@@ -14,12 +21,12 @@ export default function useGeolocation() {
     coordinates: { lat: INIT_COORDINATE.LAT, lng: INIT_COORDINATE.LNG },
   });
 
-  const onSuccess = (location: { coords: { latitude: number; longitude: number } }) => {
+  const onSuccess = (currentLocation: { coords: { latitude: number; longitude: number } }) => {
     setLocation({
       loaded: true,
       coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
+        lat: currentLocation.coords.latitude,
+        lng: currentLocation.coords.longitude,
       },
     });
   };
@@ -52,8 +59,16 @@ export default function useGeolocation() {
     return () => navigator.geolocation.clearWatch(watch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  /**
+   * 내 현재위치를 가져오는게 실패했는지
+   */
+  const isErrorLoadLocation = !location.loaded && location.coordinates;
+  /**
+   * 브라우저에서 권한을 가져오는게 실패했는지
+   */
+  const isDeniedPermission = location.loaded && !location.coordinates;
 
-  return location;
+  return { location, isErrorLoadLocation, isDeniedPermission };
 }
 
 export const INIT_COORDINATE = {

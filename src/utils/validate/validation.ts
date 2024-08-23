@@ -49,14 +49,18 @@ yup.setLocale({
 export const validation = {
   /**********************************************    Simple Validation      **************************************************/
   SIGN_IN_ID: yup.string().required().matches(regex.signInId, SIGN_IN_ID_VALID_TEXT),
-  EMAIL: yup.string().required().email(EMAIL_VALID_TEXT), //이메일
-  PASSWORD: yup.string().required().matches(regex.password, PASSWORD_VALID_TEXT), //비밀번호
+  /**이메일. */
+  EMAIL: yup.string().required().email(EMAIL_VALID_TEXT),
+  /**비밀번호. */
+  PASSWORD: yup.string().required().matches(regex.password, PASSWORD_VALID_TEXT),
+  /**비밀번호 확인. ⚠️WARNING! 확인대상 비밀번호는 반드시 password라고 폼에 작성할 것.*/
   PASSWORD_CONFIRM: yup
     .string()
     .required()
     .test('password-match', PASSWORD_MATCH_TEXT, function (value) {
       return value === this.resolve(yup.ref('password'));
-    }), //비밀번호 확인
+    }),
+  /**핸드폰 번호 유효성 검사. */
   PHONE_NUMBER: yup.string().required().matches(regex.phone, PHONE_NUMBER_VALID_TEXT),
   LOCAL_NUMBER: yup.string().required().matches(regex.localNumber, LOCAL_NUMBER_VALID_TEXT),
   IMAGE_FILES: yup.mixed().required(REQUIRED_MORE_ONE_IMAGE_VALID_TEXT),
@@ -66,19 +70,22 @@ export const validation = {
   REQUIRED_SELECT_BOX: yup.string().required(REQUIRED_OPTION_VALID_TEXT),
   REQUIRED_SELECT_BOX_2: yup.mixed().required(REQUIRED_OPTION_VALID_TEXT),
   REQUIRED_DATE: yup.string().required(),
+  /**필수 ) MAN or WOMAN값. */
   REQUIRED_GENDER: yup.string().required().oneOf(['MAN', 'WOMAN'], REQUIRED_OPTION_VALID_TEXT),
+  /**필수 ) Y or N값. */
   REQUIRED_YES_OR_NO: yup.string().required().oneOf(['Y', 'N'], REQUIRED_OPTION_VALID_TEXT),
+  /**필수 ) Y or N값. 반드시 Y를 체크해야 유효성 통과. */
   REQUIRED_YES_CHECK: yup
     .string()
     .required()
     .oneOf(['Y', 'N'], REQUIRED_OPTION_VALID_TEXT)
     .test('check-yes', REQUIRED_AGREE_TEXT, (value) => value === 'Y'),
   REQUIRED_ARRAY: yup.array().min(1, REQUIRED_INPUT_VALID_TEXT).required(),
+  /**필수 ) 숫자만 입력. 숫자가 아닌타입 입력시 에러발생. */
   REQUIRED_NUMBER: yup.number().required().typeError(REQUIRED_NUMBER_VALID_TEXT),
   OPTION_NUMBER: yup.number().typeError(REQUIRED_NUMBER_VALID_TEXT).notRequired(),
-  OPTION_LOCAL_NUMBER: yup.string().matches(regex.optionLocalNumber, LOCAL_NUMBER_VALID_TEXT).notRequired(), //비밀번호
   /**********************************************    Combined Validation      **************************************************/
-  /**필수) 0부터 100까지의 숫자 */
+  /**필수 ) 0부터 100까지의 숫자 */
   REQUIRED_RATE_NUMBER: yup
     .number()
     .typeError(REQUIRED_NUMBER_VALID_TEXT)

@@ -126,12 +126,12 @@ const S = {
 const StyledLabel = styled.label<{ required?: boolean; fontSize?: string }>`
   display: inline-block;
   font-weight: 500;
+  color: ${(props) => props.theme.colors.modernBlack};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};
   margin-bottom: 5px;
   height: 25px;
   width: auto;
   cursor: default;
-  color: ${(props) => props.theme.colors.modernBlack};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};
   ${(props) =>
     props.required &&
     css`
