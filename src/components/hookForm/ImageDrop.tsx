@@ -112,7 +112,7 @@ export default function ImageDrop<T extends FieldValues>({ name, boxSize = 150, 
           const isImage = image as File;
           return { name: isImage.name.normalize('NFC'), src: window.URL.createObjectURL(isImage) };
         }
-        return { name: String(index), src: image as string };
+        return { name: String(index), src: image as unknown as string };
       });
       setPreviewFiles(result);
       clearErrors(name);
